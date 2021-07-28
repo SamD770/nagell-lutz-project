@@ -13,21 +13,57 @@
 \usepackage{graphicx}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 
-\title{Your Paper}
-\author{You}
+\title{Elliptic Curves and the Nagell-Lutz theorem:\\a guided reinvention}
+\author{Samuel Dauncey}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Your abstract.
+    
+"Number theory has an annoying habit: the field produces, without effort, innumerable problems which have a sweet, innocent air about them, tempting flowers; and yet... number theory swarms with bugs, waiting to bite the tempted flower-lovers who, once bitten, are inspired to excesses of effort!" - Barry Mazur
 \end{abstract}
 
-\section{Introduction}
+\section{Introduction and Motivation}
 
-Your introduction goes here! Simply start writing your document and use the Recompile button to view the updated PDF preview. Examples of commonly used commands and features are listed below, to help you get started.
+Suppose one wanted to find all solutions to the innocent - looking polynomial equation:\\
 
-Once you're familiar with the editor, you can find various project setting in the Overleaf menu, accessed via the button in the very top left of the editor. To view tutorials, user guides, and further documentation, please visit our \href{https://www.overleaf.com/learn}{help library}, or head to our plans page to \href{https://www.overleaf.com/user/subscription/plans}{choose your plan}.
+$3 X^3 +  2 X Y^2 + 2 Y^3 = Z^3$ \quad For integers $X$, $Y$ and $Z$. \\
+
+ One may realise that, given a solution; say $(X, Y, Z) = (1, 2, 3)$, one can see that we can generate infintely many more solutions $(X, Y, Z) = (2, 4, 6), \; (3, 6, 9), \; \dots \; (n, 2n, 3n) \; \dots $. This property of our equation is special, it is called \emph{homogeneity} and stems from the fact that if we sum up the powers of $X$, $Y$ and $Z$ in each of the terms of our equation, we get the same integer (in this case, three). \\
+ 
+ Finding solutions to homogeneous equations is of special importance to number theorists, examples including the Fermat equation $X^m + Y^m = Z^m$. \\
+ 
+ In essence, we can think of each of these infinite sets of solutions as all part of the same solution, and we can see that, if we view our solutions as coordinates in $R^3$, each one of our infinite sets of solutions can be viewed as a line going through the origin and and a point with integer coordinates. Dividing our original equation by $Z$, we can see that our problem is equivalent to finding the rational solutions to the equation:\\
+ 
+ $3x^3 + 2xy + y^3 = 1$\\
+ 
+With rational solution $(x, y) = (\frac{m}{n}, \frac{p}{q})$ being converted into $(X, Y, Z) = (m, p, nq)$ and integer solution $(X, Y, Z)$ being converted into $(\frac{X}{Z}, \frac{Y}{Z})$. However, note that this conversion isn't well-defined when $Z = 0$, so we still have to consider the integer solutions to $3 X^3 +  2 X Y^2 + 2 Y^3 = 0$. However; as this is also a homogeneous polynomial equation, we can repeat our process, this time by dividing by $Y$ to see we want to find solutions to: \\
+
+$3 x^3 + 2 x + 2 = 0$ \quad for rational $x$ and $X^3 = 0$ for integer $X$\\
+
+Hence, we can see that there is a one-to-one correspondence between the "lines" of integer solutions to $3 X^3 +  2 X Y^2 + 2 Y^3 = Z^3$ and rational solutions to  $3x^3 + 2xy + y^3 = 1$, \quad $3 x^3 + 2 x + 2 = 0$, and $X^3 = 0$. Thinking back to our visualisation of our solutions to our integer equation as lines, we can see that our first division resembles looking at the intersection of the plane $Z = 1$ and our solution lines, and the fact that we could recursively apply this procedure is a hint that the \emph{projective space} we are working in has some kind of recursive structure.
+
+Now, we can trivially solve $X^3 = 0 $ to see that $X = 0$ is the only solution (corresponding to the solution $(X, Y, Z) = (0, 0, 0)$). Slightly more difficult is the rational solutions to $3x^3 + 2 x + 2 = 0$; Gauss's Lemma tells us that any solution in it's lowest terms $x = \frac{m}{n}$ must have $m$ dividing $2$ and $n$ dividing $3$, however we can see that the only candidates this leaves, $x = +-\frac{2}{3}$ do not solve the equation; so we have no solutions of the form $(X, Y, 0)$ with non-zero $Y$. Hence, we can see that the only thing stopping us from solving our starting problem is finding the rational solutions to  $3x^3 + 2xy + y^3 = 1$; unfortunately, this turns out to be alot harder. \\
+
+These solutions form an \emph{algebraic curve} when visualised in the $x,y-$plane, and through analysing this curve geometrically we will be able to get some description of our solution.\\
+
+Note that, given two points $(x_1, y_1)$ and $(x_2, y_2)$ on a degree-3 algebraic curve defined by $f(x, y) = 0$, we can find a third point $(x_3, y_3)$ on the curve by projecting a line $\alpha x + \beta y + \gamma = 0$ through them and looking at the intersection with the curve (in general*). On top of this, when we solve these simultaneous equations by eliminating one variable we get two cubics for the $x$ and $y$ coordinates, $a_3 x^3 + a_2 x^2 + a_1 x + a_0 = 0$ , \quad $b_3 y^3 + b_2 y^2 + b_1 y + b_0 = 0$. We know that the sums $x_1 + x_2 + x_3 = -\frac{a_2}{a_3}$ and $y_1 + y_2 + y_3 = -\frac{b_2}{b_3}$ are satisfied; so if $x_1$, $x_2$ and our coefficients are in some field $F$, $x_3$ must also be in $F$; and likewise for our $y$ coordinates, this means that, given a pair of rational solutions we can get another solution by projecting a line.
+
+* the case where $a_3$ or $b_3$ are zero corresponds to the case where our line meets our curve asymptotically, or "at infinity", and we will see more about this when we go into projective geometry.
+\\ 
+
+The first theorem we will prove is the Mordell-Wiel theorem, which tells us that we can take a finite set of rational points on our curve and, by projecting lines through them, can get every other rational point on our curve.\\
+
+The Nagell-Lutz theorem gives us a set of criteria which we can use to build an algorithm for all of the points that form "cycles" through our operation of addition.\\
+
+
+ 
+ 
+ 
+ 
+ 
+ 
 
 \section{Some examples to get started}
 
@@ -40,7 +76,7 @@ Simply use the section and subsection commands, as in this example document! Wit
 First you have to upload the image file from your computer using the upload link in the file-tree menu. Then use the includegraphics command to include it in your document. Use the figure environment and the caption command to add a number and a caption to your figure. See the code for Figure \ref{fig:frog} in this section for an example.
 
 Note that your figure will automatically be placed in the most appropriate place for it, given the surrounding text and taking into account other figures or tables that may be close by. You can find out more about adding images to your documents in this help article on \href{https://www.overleaf.com/learn/how-to/Including_images_on_Overleaf}{including images on Overleaf}.
-
+\newpage
 \begin{figure}
 \centering
 \includegraphics[width=0.3\textwidth]{frog.jpg}
