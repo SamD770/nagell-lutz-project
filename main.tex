@@ -26,7 +26,9 @@
 
 \section{Introduction and Motivation}
 
-Suppose one wanted to find all solutions to the innocent - looking polynomial equation:\\
+\subsection{An innocent-looking problem}
+
+Suppose one wanted to find all solutions to the polynomial equation:\\
 
 $3 X^3 +  2 X Y^2 + 2 Y^3 = Z^3$ \quad For integers $X$, $Y$ and $Z$. \\
 
@@ -36,7 +38,7 @@ $3 X^3 +  2 X Y^2 + 2 Y^3 = Z^3$ \quad For integers $X$, $Y$ and $Z$. \\
  
  In essence, we can think of each of these infinite sets of solutions as all part of the same solution, and we can see that, if we view our solutions as coordinates in $R^3$, each one of our infinite sets of solutions can be viewed as a line going through the origin and and a point with integer coordinates. Dividing our original equation by $Z$, we can see that our problem is equivalent to finding the rational solutions to the equation:\\
  
- $3x^3 + 2xy + y^3 = 1$\\
+ $3x^3 + 2xy + 2y^3 = 1$\\
  
 With rational solution $(x, y) = (\frac{m}{n}, \frac{p}{q})$ being converted into $(X, Y, Z) = (m, p, nq)$ and integer solution $(X, Y, Z)$ being converted into $(\frac{X}{Z}, \frac{Y}{Z})$. However, note that this conversion isn't well-defined when $Z = 0$, so we still have to consider the integer solutions to $3 X^3 +  2 X Y^2 + 2 Y^3 = 0$. However; as this is also a homogeneous polynomial equation, we can repeat our process, this time by dividing by $Y$ to see we want to find solutions to: \\
 
@@ -44,26 +46,238 @@ $3 x^3 + 2 x + 2 = 0$ \quad for rational $x$ and $X^3 = 0$ for integer $X$\\
 
 Hence, we can see that there is a one-to-one correspondence between the "lines" of integer solutions to $3 X^3 +  2 X Y^2 + 2 Y^3 = Z^3$ and rational solutions to  $3x^3 + 2xy + y^3 = 1$, \quad $3 x^3 + 2 x + 2 = 0$, and $X^3 = 0$. Thinking back to our visualisation of our solutions to our integer equation as lines, we can see that our first division resembles looking at the intersection of the plane $Z = 1$ and our solution lines, and the fact that we could recursively apply this procedure is a hint that the \emph{projective space} we are working in has some kind of recursive structure.
 
-Now, we can trivially solve $X^3 = 0 $ to see that $X = 0$ is the only solution (corresponding to the solution $(X, Y, Z) = (0, 0, 0)$). Slightly more difficult is the rational solutions to $3x^3 + 2 x + 2 = 0$; Gauss's Lemma tells us that any solution in it's lowest terms $x = \frac{m}{n}$ must have $m$ dividing $2$ and $n$ dividing $3$, however we can see that the only candidates this leaves, $x = +-\frac{2}{3}$ do not solve the equation; so we have no solutions of the form $(X, Y, 0)$ with non-zero $Y$. Hence, we can see that the only thing stopping us from solving our starting problem is finding the rational solutions to  $3x^3 + 2xy + y^3 = 1$; unfortunately, this turns out to be alot harder. \\
+Now, we can trivially solve $X^3 = 0 $ to see that $X = 0$ is the only solution (corresponding to the solution $(X, Y, Z) = (0, 0, 0)$). Slightly more difficult is the rational solutions to $3x^3 + 2 x + 2 = 0$; Gauss's Lemma tells us that any solution in it's lowest terms $x = \frac{m}{n}$ must have $m$ dividing $2$ and $n$ dividing $3$, however we can see that the only candidates this leaves, $x = +-\frac{2}{3}$ do not solve the equation; so we have no solutions of the form $(X, Y, 0)$ with non-zero $Y$. Hence, we can see that the only thing stopping us from solving our starting problem is finding all the rational solutions to  $3x^3 + 2xy + y^3 = 1$; unfortunately, this turns out to be alot harder. \\
 
 These solutions form an \emph{algebraic curve} when visualised in the $x,y-$plane, and through analysing this curve geometrically we will be able to get some description of our solution.\\
 
-Note that, given two points $(x_1, y_1)$ and $(x_2, y_2)$ on a degree-3 algebraic curve defined by $f(x, y) = 0$, we can find a third point $(x_3, y_3)$ on the curve by projecting a line $\alpha x + \beta y + \gamma = 0$ through them and looking at the intersection with the curve (in general*). On top of this, when we solve these simultaneous equations by eliminating one variable we get two cubics for the $x$ and $y$ coordinates, $a_3 x^3 + a_2 x^2 + a_1 x + a_0 = 0$ , \quad $b_3 y^3 + b_2 y^2 + b_1 y + b_0 = 0$. We know that the sums $x_1 + x_2 + x_3 = -\frac{a_2}{a_3}$ and $y_1 + y_2 + y_3 = -\frac{b_2}{b_3}$ are satisfied; so if $x_1$, $x_2$ and our coefficients are in some field $F$, $x_3$ must also be in $F$; and likewise for our $y$ coordinates, this means that, given a pair of rational solutions we can get another solution by projecting a line.
+Note that, given two points $(x_1, y_1)$ and $(x_2, y_2)$ on a degree-3 algebraic curve defined by $f(x, y) = 0$, we can find a third point $(x_3, y_3)$ on the curve by projecting a line $\alpha x + \beta y + \gamma = 0$ through them and looking at the intersection with the curve (in general*). On top of this, when we solve these simultaneous equations by eliminating one variable we get two cubics for the $x$ and $y$ coordinates, $a_3 x^3 + a_2 x^2 + a_1 x + a_0 = 0$ , \quad $b_3 y^3 + b_2 y^2 + b_1 y + b_0 = 0$. We know that the sums $x_1 + x_2 + x_3 = -\frac{a_2}{a_3}$ and $y_1 + y_2 + y_3 = -\frac{b_2}{b_3}$ are satisfied; so if $x_1$, $x_2$ and our coefficients are in some field $F$, $x_3$ must also be in $F$; and likewise for our $y$ coordinates, this means that, given a pair of rational solutions we can get another rational solution by projecting a line.
 
 * the case where $a_3$ or $b_3$ are zero corresponds to the case where our line meets our curve asymptotically, or "at infinity", and we will see more about this when we go into projective geometry.
 \\ 
 
 The first theorem we will prove is the Mordell-Wiel theorem, which tells us that we can take a finite set of rational points on our curve and, by projecting lines through them, can get every other rational point on our curve.\\
 
-The Nagell-Lutz theorem gives us a set of criteria which we can use to build an algorithm for all of the points that form "cycles" through our operation of addition.\\
+- explanation of Nagell-Lutz using only the line function
+
+The Nagell-Lutz theorem gives us a set of criteria which we can use to build an algorithm for all of the rational points that form "cycles" through our operation of addition.\\
+
+\subsection{Why cubic plane curves?}
+
+one variable:
+
+-pretty much fully solved?
+
+two variables:
+
+- degrees 1 and 2 solved
+
+- degree 3 much harder (not all questions answered)
+
+three variables:
+
+- ???
+
+Yuri Matiyasevich's negative solution to Hilbert's tenth problem: no algorithm (including the algorithm of all human mathematicians) will be able to determine whether or not a given diophantine equation has solutions.
+
+\subsection{Assumed prior knowledge}
+
+- Algebra: knowledge of a group, ring and field
+
+\newpage
+
+\section{Projective geometry}
+
+\subsection{Homogeneous Coordinates}
+
+In the introduction section, I hinted at the idea that we can think of linearly related solutions, such as $(1, 2, 3)$ and $(2, 4, 6)$ to our homogeneous equation  as one line in $R^3$ and we can make this rigorous by defining a new kind of space. We kind of already did this when we divided by $Z$, but this feels unnatural because it is breaking the symmetry of our equation between $X$, $Y$ and $Z$. We will see later that this kind of space is called \emph{projective space} and when we do geometry on this space it is called \emph{projective geometry}, hence the name of this section.\\
+
+We want to define a \emph{point} such that all the solutions $(t, 2t, 3t)$ are considered to be the same, just as when we divide through by $Z$ so it makes sense to say a point in projective space as a ratio between the X, Y and Z coordinates, :\\
+
+We denote $P = [X : Y : Z] \in P_R^2$ for real numbers $X$, $Y$ and $Z$ which are called the \emph{homogeneous} coordinates of $P$;\\
+
+where two points are said to be equal, ie $[X : Y : Z] = [X' : Y' : Z']$ if and only if we can find a $t \in R$ satisfying $X = tX', Y =  tY'$ and $Z = tZ'$\\
+
+Unfortunately, this on it's own is not a well-defined equivalence relation; every point is equal to $[0 : 0 : 0]$. To fix this, we simply ban this point and say if  $[X : Y : Z] \in P_R^2$  then one of $X$, $Y$ and $Z$ is non-zero. It is relatively straightforward to now mentally check that this definition of equality satisfies reflexivity, symmetry and transitivity.\\
+
+Note that, if you view the homogeneous coordinates $X$, $Y$ and $Z$ as a point $(X, Y, Z)$ in $R^3$ then our \emph{points} in $P_R^2$ (the equivalence classes of coordinates which give equal points) can be visualised as \emph{lines} going through the origin in $R^3$. Hence, it makes intuitive sense that our \emph{lines} in $P_R^2$ could be visualised as \emph{planes} containing the origin in $R^3$. This intuition gives us the definition of a line in $P_R^2$:\\
+
+A line in $P_R^2$ is the set of points $[X : Y : Z]$ where $AX + BY + CZ = 0$ for some fixed $A$, $B$ and $C$. \\
+
+Note our definition of a line is well defined as  $AX + BY + CZ = 0$ iff  $A(tX) + B(tY) + C(tZ) = 0$. This geometrical intuition gives us an interesting property of lines in $P_R^2$: \\
+
+Two distinct lines in $P_R^2$ intersect at exactly one point. For example, say we have two lines $AX + BY + CZ = 0$ and $\Bar{A}X + \bar{B}Y + \bar{C}Z = 0$. We can solve these equations simultaneously by putting them in a matrix-vector product:\\
+
+$$ \begin{bmatrix}
+A & B & C \\
+\Bar{A} & \Bar{B} & \Bar{C} 
+\end{bmatrix} 
+\begin{bmatrix}
+X \\
+Y \\
+Z \\
+\end{bmatrix} 
+= \vec{0}
+$$
+
+From this we can see that, if the two lines are distinct, then $A  B  C$ and
+$\Bar{A}  \Bar{B}  \Bar{C} $ will be linearly independent, as if they weren't, we would be able to reduce their defining equations onto each other. Hence our matrix will have rank 2 and so by the rank-nullity theorem we will have one linearly independent solution for $X$, $Y$ and $Z$, corresponding to our point of intersection in $P_R^2$. This property of lines in $P_R^2$ is different to, say, $R^2$, where parallel lines intersect nowhere.
+
+- projecting onto a plane (sphere doesn't work because of rational to rational mapping :( )
+When we divided by $Z$ in our introduction, we took each point in $P_R^2$ and mapped it to a point in $R^2$, barring the points where the $Z$ coordinate was $0$. The obvious way to map points in $P_R^2$ onto a surface is to look at projecting them onto the unit sphere, For example mapping $[1 : 2 : 3]$ to the point $(,,)$. The problem with this approach is that this takes a point with rational coordinates and maps it to a point without rational coordinates; meaning it isn't very useful for us. Instead, we have to suffice by projecting our projective plane onto a flat screen.
+
+- recursive definition
+
+- General fields
+ Note that in this section I used the real numbers, $R$ as the field that we were working over. However, the proofs used no special properties about the real numbers, hence we could replace $R$ with any field $F$ and get the same results. In general, we call $P_F^2$ the \emph{projective plane over the field} $F$,  alot of algebraic geometry is concerned with $P_C^2$ for instance, however for us it suffices to know that $P_Q^2$ is well defined.
+
+\subsection{Projective Transformations}
+
+\subsection{Transforming Cubic Curves}
+
+\subsection{Groups over Cubic Curves}
+
+Let $C(F)$ be a cubic curve working in some field $F$
+
+As we sa:
+
+define $P * Q \in C(F)$ to be the third point on $C(F)$,
+
+have $P * Q = Q * P$
+
+and $(P * Q) * Q = P$
+
+Is $(C(F), *)$ a group? Unfortunately not; it is not hard to mentally verify that a unique identity element doesn't exist and that associativity won't hold.
+
+For three points, $P$, $Q$ and $R$ on our curve $C$ Write $P - Q - R$ to mean these three points are colinear, this notation helps us clear up the fact that these six statements are equivalent:
+
+$P * Q = R, P * Q = R, P * R = Q,  Q * R = P$
+
+if $A - B - C$ and $D - E - F$ and $A - D - G$ and $B - E - H$
+
+then $C * F = G * H$
+
+If we slightly abuse our new notation, our theorem becomes:
+
+if
+$
+\\
+A - B - C \\
+D - E - F \\
+H - I
+$\\
+then, for some $J \in C(F)$:
+$
+\\
+A - B - C \\
+D - E - F \\
+H - I - J
+$
+
+Although the notation makes this look intuitive, it is not at all obvious. 
+Why should the line defined by $C$ and $F$ and the line defined by $H$ and $J$ intersect with the curve at the same point? 
+
+Three cubic curves that meet at eight points $P_1 \dots P_8$ will also all meet at a ninth point $P_9$.
+
+let v be the vector:
+
+$
+\begin{bmatrix}
+X^3 \\
+Y^3 \\
+Z^3 \\
+\end{bmatrix} 
+$
+
+-why is the group law the way it is?
+
+- show ((A * B) * O) * C = A * ((B * C) * O) ?
+
+therefore, if A + B = (A * B) * O then (A + B) + C = A + (B + C)
+
+\newpage
+
+\section{The Mordell-Wiel theorem (For elliptic curves)}
+
+\newpage
+
+\section{The Nagell-Lutz theorem}
+
+\subsection{General idea and motivation}
+
+-knowledge and familiarity with the concepts of rings asssumed\\
+
+The Mordell-Wiel theorem gave us information about the structure of the group of rational points; however the problem of finding the rank or the generating set for some curve $C$ is still not fully solved. Thankfully, the other component of our group, the torsion subgroup, is much better understood, and in the following chapter we will go through a theorem that fully describes how to find all of it's points for any given curve C: the Nagell-Lutz theorem.\\
+
+In general, points seem to increase their "complexity" when we add them, for instance, in our proof of the Mordell-Wiel theorem, we showed that the amount of points under some bound of the complexity measure of height was finite, and we could find a bound that contains all of the generating elements. This means that, if P is some generating element then the height of P must increase without bound, ie the sequence $h(nP)$ for natural $n$ is unbounded. This is in contrast to our points in the torsion group, where $h(nP)$ is periodic and therefore must be bounded. Hence, it seems like a good method to find the torsion points of our curve would be to look for points for which $h(nP)$ is bounded.\\
+
+In fact, the description which the Nagell-Lutz theorem gives tells us that, if our curve has integer coefficients, then all of it's rational torsion points must have integer coefficients; ie if $T$ is the torsion subgroup then $T \subseteq C(Z)$. This is a strange and surprising result, and until we go through some of the basic lemmas of the proof, it is hard to intuitively explain why we would expect this to be the case. One thing we can see is that the complexity measure of height won't work for our proof: it is impossible to take $h(r)$ for some rational number $r \in Q$ and determine whether or not $r$ is an integer. At first, this may not seem like a big deal, however we will see later that it is not tricky to protectively transform \emph{any} elliptic curve into an elliptic curve with integer coordinates, and therefore by extension, \emph{any} cubic curve into an elliptic curve with integer coordinates.\\
+
+The for some rational $r \in Q$ p-adic order of $r$, $ord_p(r)$ is defined as the value of the power of the prime $p$ when $p$ is completely "factored out" of $r$; ie, we can uniquely write:\\
+
+$r = \frac{m}{n}p^v$ such that $p$, $m$ and $n$ are all coprime integers, then $ord_p(r) = v$\\
+
+by convention, we define $ord_p(0) = \infty$ as in a sense $p$ divides $0$ infinitely\\
+
+This complexity measure has the nice property that $r$ is an integer if and only if $ord_p(r) \geq 0$ for all primes $p$, making it more suitable for the theorem that we are going to prove. \\
+
+There are some other nice facts about p-adic order that one can mentally verify:\\
+
+for all $q, r \in Q$:\\
+
+- $ord_p(qr) = ord_p(q) + ord_p(r)$\\
+
+- if $ord_p(q) = ord_p(r)$ then $ord_p(q + r)  \geq ord_p(q)$ or $ord_p(r)$\\
+
+- if $ord_p(q) > ord_p(r)$ then $ord_p(q + r) = ord_p(r)$\\
+
+- in general, $ord_p(q + r) \geq min(ord_p(q)$, $ord_p(r))$\\
+
+We still don't have a measure that we can apply to points on $C(Q)$ just yet, but we can use these facts to prove a theorem about integer-coefficiented polynomials:\\
+
+if $f(x) = x^n + c_{n-1}x^{n-1} + c_{n-2}x^{n-2} + \dots c_1 x + c_0$ is an integer coefficiented-polynomial, then for all $x \in Q$ with $ord_p(x) < 0$: $ord_p(f(x)) = n \ ord_p(x)$\\
+
+The proof is relatively simple:
+
+first, note that $ord_p(c_k x^k) = ord_p(c_k) + k \ ord_p(x)$ and that, as $f$ has integer coefficients, $ord_p(c_k) \geq 0$ hence $ord_p(c_k x^k) \geq k \ ord_p(x)$. However, as $ord_p(x) < 0$, $k \ ord_p(x) > n \ ord_p(x)$ for $k > n$. Hence we can see that $ord_p(c_k x^k) > ord_p(x^n)$ so our $x^n$ term will "eat" all the terms to the right of it:\\
+
+$ord_p(x^n) = ord_p(x^n + c_{n-1}x^{n-1}) = ord_p(x^n + c_{n-1}x^{n-1} + c_{n-2}x^{n-2}) = \dots = ord_p(f(x))$\\
 
 
- 
- 
- 
- 
- 
- 
+Thinking about this with respect to elliptic curves naturally leads us to the following corollary:\\
+
+Let $C$ be an elliptic curve defined by $y^2 = f(x)$ for some integer coefficiented cubic $f$; Then, for all points $P = (x_P, y_P) \in C(Q)$ and all primes p; either:\\
+
+$ord_p(x_P) \geq 0$ \quad and \quad  $ord_p(y_P) \geq 0$ \\
+
+or \quad $ 2 \ ord_p(y_P) = 3 \ ord_p(x_P)$\\
+
+This is not too tricky to see:\\
+
+if \quad $ord_p(y_P) < 0$ \quad then \quad $ord_p(f(x_P)) < 0$ \quad so \quad $ord_p(x_P) < 0$
+
+and if \quad $ord_p(x_P) < 0$ \quad then \quad $3 \ ord_p(x_P) = ord_p(f(x_P)) = ord_p(y_P^2) = 2 \ ord_p(y_P)$\\
+
+Hence, if $ord_p(x_P) < 0$ or $ord_p(y_P) < 0$ we should be able to find an integer $v > 0$ such that: $ord_p(x_p) = -2v$ and $ord_p(y_P) = -3v$\\
+
+Applying this with all primes p tells us that $x_P$ and $y_P$ are of the form:
+
+$x_P = \frac{m}{e^2}$ \quad and \quad $y_P = \frac{n}{e^3}$ for some integers $m$, $n$ and $e$
+
+This becomes tricky to analyse; however we are nearing in on the complexity measure we want to use for our points. Namely, if we define $t(P) = \frac{x_P}{y_P}$ then we see that, using the definition of $v$ above, $ord_p(t(P)) = ord_p(x_p) - ord_p(y_P) = v$. Hence, if we can prove $ord_p(t(P)) \geq 0$ then, it cannot be the case that $ord_p(x_P) < 0$ or $ord_p(y_P) < 0$. hence we can prove $P$ has integer coordinates by proving  $ord_p(t(P)) \geq 0$ for all primes $p$
+
+
+
+
+
+\subsection{Examining t(P + Q)}
+
+\subsection{Finishing off the proof}
+
+\subsection{Further constricting the set of torsion candidates}
+
+\subsection{An algorithm for generating the set of torsion candidates}
+
+\newpage
 
 \section{Some examples to get started}
 
@@ -73,7 +287,7 @@ Simply use the section and subsection commands, as in this example document! Wit
 
 \subsection{How to include Figures}
 
-First you have to upload the image file from your computer using the upload link in the file-tree menu. Then use the includegraphics command to include it in your document. Use the figure environment and the caption command to add a number and a caption to your figure. See the code for Figure \ref{fig:frog} in this section for an example.
+First you have to upload the image file from your computer using the upload link in the file-tree menu. Then use the include graphics command to include it in your document. Use the figure environment and the caption command to add a number and a caption to your figure. See the code for Figure \ref{fig:frog} in this section for an example.
 
 Note that your figure will automatically be placed in the most appropriate place for it, given the surrounding text and taking into account other figures or tables that may be close by. You can find out more about adding images to your documents in this help article on \href{https://www.overleaf.com/learn/how-to/Including_images_on_Overleaf}{including images on Overleaf}.
 \newpage
