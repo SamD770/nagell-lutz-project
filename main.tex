@@ -220,7 +220,7 @@ We will see that we can adapt this notion of height of rational numbers into a c
 
 \subsection{The properties of height}
 
-One can mentally verify that the height function sastisfies the following properties:\\
+To get familiar with the height function, one can mentally verify that the height function sastisfies the following upper bounds:\\
 
 - $H(pq) \leq H(p)H(q)$\\
 
@@ -228,13 +228,13 @@ One can mentally verify that the height function sastisfies the following proper
 
 - $H(p^n) = H(p)^n$\\
 
-Lemma: if $f$ is a polynomial of degree $n$, then there exists a constant $k$ only depending on $f$ such that, for all $x$:
+As our formulae for adding points involves substituting their coordinates in for polynomials; it makes sense to examine how the height works with polynomials. Intuitively, it makes sense that the the size numerator or denominator of the result of a polynomial will grow roughly with the size of the numerator or denominator of the input raised to the degree of the polynomial; which we can express with the following lemma:\\
 
-$H(f(x)) \leq k(H(x))^n$
+If $f$ is a polynomial of degree $n$, then there exist constants $K_l$ and $K_u$ only depending on $f$ such that, for all $x$:
 
-Proof:
+\[ K_l (H(x))^n \leq H(f(x)) \leq K_u (H(x))^n \]
 
-write 
+The proof of the upper bound is relatively straightforwards using our properties of height:
 
 \begin{align*} 
 H(f(x)) &= H(a_n x^n + a_{n-1}x^{n-1} + \dots + a_1 x + a_0)\\
@@ -246,19 +246,45 @@ H(f(x)) &= H(a_n x^n + a_{n-1}x^{n-1} + \dots + a_1 x + a_0)\\
 &\leq 2^n (H(x))^n H(a_n)H(a_{n-1})\dots H(a_1)H(a_0)
 \end{align*} 
 
-then, we can see that:\\
+then, we can see that:
 
-$H(f(x)) = \leq k H(x)^n)$ with $k= 2^n H(a_n)H(a_{n-1})\dots H(a_1)H(a_0)$\\
+\[ H(f(x)) \leq K_u H(x)^n \quad \text{with} \quad K_u = 2^n H(a_n)H(a_{n-1})\dots H(a_1)H(a_0) \]
 
-maybe prove that $l H(x)^n \leq H(f(x))$?\\
+Proving the lower bound is trickier, mainly because for arbitrary $p$ and $q$ we cannot put lower bounds on $H(pq)$ or $H(p + q)$ based solely on $H(p)$ and $H(q)$. Instead, we have to write $x = \frac{\alpha}{\beta}$ as a fraction in it's lowest terms. Then, we can see that:
 
-Hence, we can see that if $(x, y)$ is a point the curve: $y^2 = x^3 + ax^2 + bx + c$, then there exists constants $K_1$ and $K_2$ such that for all $x$:\\
+\begin{align*}
+    H(f(x)) &= H(f(\frac{\alpha}{\beta}))\\
+            &= H(\frac{1}{\beta^n}(a_n \alpha^n + \alpha_{n-1} \beta x^{n-1} + \dots + a_1 \alpha \beta^{n-1} + a_0 \beta^n))\\
+            &= max(|\beta^n|, |\beta^n f(\frac{\alpha}{\beta})|)\
+\end{align*}
 
-$K_1 H(x)^3 \leq H(y^2) = H(y)^2 \leq K_2 H(x)^3$\\
+On the last line, we used the fact that both $\beta^n f(\frac{\alpha}{\beta})$ and $\beta^n$ are integers, and that $\beta^n f(\frac{\alpha}{\beta}) - \alpha^n \equiv 0 \quad (\bmod{\beta})$ but $\alpha \not\equiv 0 \quad (\bmod{\beta})$, so $gcd(\beta^n f(\frac{\alpha}{\beta}), \beta) = 1$. Now, as the max of two numbers is always greater than the average, we can see that:
+
+\begin{align*}
+    H(f(x)) & \geq \frac{|\beta^n| + |\beta^n f(\frac{\alpha}{\beta})|}{2}\\
+    &\text{so}\\
+    \frac{H(f(x))}{H(x^n)} &\geq \frac{|\beta^n| + |\beta^n f(\frac{\alpha}{\beta})|}{2 max(|\alpha^n|,|\beta^n|)}\\
+                        &= \frac{1 + |f(\frac{\alpha}{\beta}|)}{2 max(1, |\frac{\alpha^n}{\beta^n}|)}\\
+                        &= \frac{1 + |f(x)|}{2 max(1, |x|^n)}
+\end{align*}
+
+Hence, all we need to do to prove our lemma is show that the function: $g(x) = \frac{1 + |f(x)|}{2 max(1, |x|^n)}$ has positive lower bound $g(x) \geq K_l > 0$. Note that this function is continuous, so it's image is a interval in $R$. Let $K_l = inf(im(g)$, it suffices to show that $K_l > 0$. Note that $g$ is positive, so $K_l \geq 0$ so the only case we have to deal with is when $K_l = 0$. in this case, $g$ gets arbitrarily close to $0$ so we must be able to find a convergent sequence $(x_n)$ such that $g(x_n) \rightarrow K_l = 0$. \\
+
+- In the case where $(x_n)$ converges to some real number $r$ we can see that $g(r) = 0$, which we can see is a contradiction as $g$ is a positive function.\\
+
+-In the case where $(x_n)$ converges to $\infty$, we can see that $g(x) \rightarrow \frac{|a_n|}{2}$, which must be non-zero as $a_n$ is non-zero, so we also derive a contradiction.\\
+
+Thus, conclude the proof of our lower bound:
+
+\[ K_l H(x)^n \leq H(f(x)) \]
 
 Notationally, it is easier to examine the log-height, denoted with a small $h$: $h(x) = ln(H(x))$. Then our lemma becomes: \\
 
-$k_1 + \frac{3}{2} h(x) \leq h(y) \leq k_2 + \frac{3}{2} h(x)$ \quad where \quad $k_1 = \frac{1}{2}ln(K_1)$, $k_2 = \frac{1}{2}ln(K_2)$\\
+\[k_l + n h(x) \leq h(f(x)) \leq k_u + n h(x) \]
+
+Applying this lemma to our curve, we can see that if $(x, y)$ is a point the curve: $y^2 = f(x) = x^3 + ax^2 + bx + c$, then there exists constants $k_1$ and $k_2$ such that for all $x$:
+
+\[ k_1 + \frac{3}{2} h(x) \leq h(y) \leq k_2 + \frac{3}{2} h(x) \quad \text{as} \quad h(y) = \frac{1}{2}h(f(x)) \]
 
 Hence, for a point $P = (x_P, y_P) \in C(Q)$ it makes sense to define the complexity of $P$ as the height of it's $x$ coordinate, as the height of it's $y$ coordinate is linked to the height of it's $x$ coordinate and it is easier to compute the $x$ coordinates of $2P$ and $P + Q$. From now on, we will denote $h(P) = h(x_P)$ to be the height of the \emph{point} $P$. By convention, we also set $h(0) = 0$.\\
 
@@ -347,7 +373,7 @@ Hence, we can see that our two sets $C(Q)_B$ and $A$ can generate $C(Q)$; howeve
 
 \subsection{General idea and motivation}
 
--knowledge and familiarity with the concepts of rings asssumed\\
+For this section, knowledge and familiarity with the concepts of rings and ideals asssumed\\
 
 The Mordell-Wiel theorem gave us information about the structure of the group of rational points; however the problem of finding the rank or the generating set for some curve $C$ is still not fully solved. Thankfully, the other component of our group, the torsion subgroup, is much better understood, and in the following chapter we will go through a theorem that fully describes how to find all of it's points for any given curve C: the Nagell-Lutz theorem.\\
 
@@ -597,10 +623,42 @@ Thankfully, using the theory of resultants and discriminants, we can prove that 
 
 $Res(f, f') = \Delta(f)$\\
 
-Hence, we can see that $\Delta(f) \in I$, so for any point with integer coordinates $P = (x, y)$ where $2P$ also has integer coordinates, we can see that $y$ must divide $\Delta(f)$, concluding our proof.
+Hence, we can see that $\Delta(f) \in I$. So for any point with integer coordinates $P = (x, y)$ where $2P$ also has integer coordinates, we can see that $y$ must divide $\Delta(f)$, concluding our proof.
 
 
-\subsection{An algorithm for generating the set of torsion candidates}
+\subsection{An algorithm for generating the set of torsion points}
+
+In the previous section, we looked at restricting the set of possible torsion points to a finite set, so that we could then test these points individually to see if they are actually of finite order or not. We will now go through an example of this, computing the torsion points of the curve:
+
+\[y^2 = f(x) = x^3 - 43 x + 166\]
+
+First, we want to calculate the discriminant to find our $y$ candidates:
+
+\[\Delta(f) =  -4 \times 0^3 \times 166 + 0^2 \times (-43)^2 + 18 \times 0 \times (-43) \times 166 - 4 \times (-43)^3 - 27 \times (166)^2 = -425984\]
+
+From this, we get a long list of candidate $y$ values, consisting of 0 and every value that divides the discriminant (thankfully, it is not too tricky to just print this out with Python):\\
+
+[0, 1, -1, 2, -2, 4, -4, 8, -8, 13, -13, 16, -16, 26, -26, 32, -32, 52, -52, 64, -64, 104, -104, 128, -128, 208, -208, 256, -256, 416, -416, 512, -512, 832, -832, 1024, -1024, 1664, -1664, 2048, -2048, 3328, -3328, 4096, -4096, 6656, -6656, 8192, -8192, 13312, -13312, 16384, -16384, 26624, -26624, 32768, -32768, 53248, -53248, 106496, -106496, 212992, -212992, 425984, -425984]\\
+
+Then, all we need to do for each candidate $y$ value is to loop through the $x$ values which divide $y^2 - 166$ and see if any of them are on the curve. For example, for the candidate $y$ value of $16$, $y^2 - 166 = 90$, so our list of candidate $x$ values is : [1, -1, 2, -2, 3, -3, 5, -5, 6, -6, 9, -9, 10, -10, 15, -15, 18, -18, 30, -30, 45, -45, 90, -90] If we check each of these candidate x values with y = 16 to see if they are points on the curve, we see that we eventually get the point (-5, 16). Repeating this process for all the candidate $y$ values eventually  gives just six candidate points:
+
+\[(3, \pm 8), \quad (11, \pm 32) \quad \text{and} \quad (-5, \pm 16)\]
+
+The Nagell-Lutz theorem tells us that this set of candidates contains all the torsion points, but it does not guarantee that all these points are torsion points. Testing these points to see if they are actually torsion points eventually leads us to see that they are all, in fact, of finite order, and our torsion subgroup is isomorphic to the cyclic group of order $7$. To do this, we simply pick one of our points say, $P = (11, 32)$, and see that:
+
+\begin{align*} 
+P &= (11, 32)\\
+2P &= (3, 8)\\
+3P &= (-5, 16)\\
+4P &= (-5, -16)\\
+5P &= (3, -8)\\
+6P &= (11, -32)\\
+7P &= 0
+\end{align*} 
+
+If any of the points in this list, say $kP$ for some $k$ didn't turn out to be in our set of torsion candidates, we would be able to deduce that this $kP$ is not a torsion point. Further, as our torsion points are a subgroup, we would be able to deduce that $P$ and hence all points on this list would not be torsion points and can therefore be discarded. As our set of candidate points is finite, we can conclude that our sequence of points $P, 2P, 3P \dots$ must eventually either a) go out of this set which we have seen meens we can discard the list or b) re-visit points, which can only be the case if $mP = 0$ for some $P$, in which case we can say that every point on this list of points is a torsion point; so we can see that our algorithm for doing this will \emph{eventually} halt.\\
+
+Barry Mazur (quoted in the beginning) proved in 1978 that there are only a few possible torsion subgroups that our elliptic curve can have; all being of order less than 12. This means that, at most, have to check $P, 2P, ... 12P$ to see if $P$ is of finite order.
 
 \newpage
 
