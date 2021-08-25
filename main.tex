@@ -55,7 +55,7 @@ Note that, given two points $(x_1, y_1)$ and $(x_2, y_2)$ on a degree-3 algebrai
 * the case where $a_3$ or $b_3$ are zero corresponds to the case where our line meets our curve asymptotically, or "at infinity", and we will see more about this when we go into projective geometry.
 \\ 
 
-The first theorem we will prove is the Mordell-Wiel theorem, which tells us that we can take a finite set of rational points on our curve and, by projecting lines through them, can get every other rational point on our curve.\\
+The first theorem we will prove is the Mordell's theorem, which tells us that we can take a finite set of rational points on our curve and, by projecting lines through them, can get every other rational point on our curve.\\
 
 - explanation of Nagell-Lutz using only the line function:\\
 Points of finite order are precisely those that eventually loop if you continually apply $P \mapsto P*P$
@@ -197,7 +197,149 @@ therefore, if A + B = (A * B) * O then (A + B) + C = A + (B + C)
 
 \newpage
 
-\section{The Mordell-Wiel theorem (For elliptic curves)}
+\section{Mordell's theorem}
+
+- Originally proved by Mordell in 1922
+
+- A similar proof was extended by Wiel to the Mordell-Wiel thoerem for his doctoral thesis; this theorem states that \emph{all} abelian varieties (of which elliptic curves are a type) have finitely generated sets of rational points.\\
+
+I have emitted the proof for one of the key lemmas in the theorem (namely that there is a finite number of cosets of $2C(Q)$ in $C(Q)$) because proving it would require a significant detour into complex analysis; making this report much longer than the target length. A proof of this lemma can be found in Silverman.
+
+We notice that, as we add points, the points seem to get progressively more "complex". For instance: <example>
+Hence, it makes sense that our generating set would be comprised of points of low complexity (and as the generating set is finite, at least \emph{bounded} complexity), to prove our theorem about $C(Q)$ being finitely generated; it makes sense to do two things;\\
+
+1. prove that the number of points below a certain bound of complexity is finite \\
+
+2. show that every point can be decomposed into a sum of lower-complexity points \\
+
+To do this, we define the \emph{height} of a rational number $q = \frac{m}{n}$ as the maximum of it's numerator and denominator written in it's lowest terms:\\
+
+$H(q) = H(\frac{m}{n}) = max(|m|, |n|)$ where $m$ and $n$ are coprime.\\
+
+We will see that we can adapt this notion of height of rational numbers into a concrete measure of complexity for our points. But first, we need to examine height in more detail.
+
+\subsection{The properties of height}
+
+One can mentally verify that the height function sastisfies the following properties:\\
+
+- $H(pq) \leq H(p)H(q)$\\
+
+- $H(p + q) \leq 2H(p)H(q)$\\
+
+- $H(p^n) = H(p)^n$\\
+
+Lemma: if $f$ is a polynomial of degree $n$, then there exists a constant $k$ only depending on $f$ such that, for all $x$:
+
+$H(f(x)) \leq k(H(x))^n$
+
+Proof:
+
+write 
+
+\begin{align*} 
+H(f(x)) &= H(a_n x^n + a_{n-1}x^{n-1} + \dots + a_1 x + a_0)\\
+&\leq 2H(a_n x^n + a_{n-1}x^{n-1} + \dots + a_1 x)H(a_0)\\
+&\leq 2H(x(a_n x^{n-1} + a_{n-1}x^{n-2} + \dots + a_1))H(a_0)\\
+&\leq 2H(x)H(a_n x^{n-1} + a_{n-1}x^{n-2} + \dots + a_1)H(a_0)\\
+&\leq 4H(x)H(a_n x^{n-1} + a_{n-1}x^{n-2} + \dots)H(a_1)H(a_0)\\
+&\dots\\
+&\leq 2^n (H(x))^n H(a_n)H(a_{n-1})\dots H(a_1)H(a_0)
+\end{align*} 
+
+then, we can see that:\\
+
+$H(f(x)) = \leq k H(x)^n)$ with $k= 2^n H(a_n)H(a_{n-1})\dots H(a_1)H(a_0)$\\
+
+maybe prove that $l H(x)^n \leq H(f(x))$?\\
+
+Hence, we can see that if $(x, y)$ is a point the curve: $y^2 = x^3 + ax^2 + bx + c$, then there exists constants $K_1$ and $K_2$ such that for all $x$:\\
+
+$K_1 H(x)^3 \leq H(y^2) = H(y)^2 \leq K_2 H(x)^3$\\
+
+Notationally, it is easier to examine the log-height, denoted with a small $h$: $h(x) = ln(H(x))$. Then our lemma becomes: \\
+
+$k_1 + \frac{3}{2} h(x) \leq h(y) \leq k_2 + \frac{3}{2} h(x)$ \quad where \quad $k_1 = \frac{1}{2}ln(K_1)$, $k_2 = \frac{1}{2}ln(K_2)$\\
+
+Hence, for a point $P = (x_P, y_P) \in C(Q)$ it makes sense to define the complexity of $P$ as the height of it's $x$ coordinate, as the height of it's $y$ coordinate is linked to the height of it's $x$ coordinate and it is easier to compute the $x$ coordinates of $2P$ and $P + Q$. From now on, we will denote $h(P) = h(x_P)$ to be the height of the \emph{point} $P$. By convention, we also set $h(0) = 0$.\\
+
+Before doing this, we will prove a lemma that will be key to our theorem:\\
+
+For any given curve $C(Q)$ and upper bound $B$, there are only finitely many points $P \in C(Q)$ such that $h(P) < B$.\\
+
+The proof is very simple; the trick is to think of the rational numbers as a plane where the denominator is plotted on the x axis and the numerator is plotted on the y axis. Consider the function $g: Z \times N \rightarrow Q$ where $g: (m, n) \mapsto \frac{m}{n}$. We can see that $g$ is surjective the set of inputs to $g$ which give an output with height less than $B$ is a rectangle, with one side length $2B + 1$ (as there are $2B + 1$ choices for the numerator) and the other side length $B$ (as there are $B$ choices for the denominator). Hence, there are at most $B(2B + 1)$ distinct rational numbers with height less than $B$. However, for a given curve $C(Q)$, there are at most two points with a given rational $x$ coordinate, hence there are at most $2B(2B + 1)$ points of height less than $B$\\
+
+
+To bring this back to what we said in our introduction, this means all we need to do to prove $C(Q)$ is finitely generated is to show that there is a set of points that generates $C(Q)$ and has bounded height; as then this set must be finite. Before we do this however, we need to examine how height interacts with the group law; as we need to introduce the notions of adding points with our height function for any hope of such a proof working.\\
+
+\subsection{Examining how height interacts with the group law}
+
+Let $P$ and $Q$ be points on our curve.
+
+Recall that:
+
+$x_{2P} = \frac{f'(x)^2}{4 f(x)} - a - 2x_P = \frac{x^4 - 2bx^2 - 8cx + b^2 - 4ac}{4(x^3 +x^2 + bx + c)}$\\
+
+In the first section, we derived a result about the height of polynomials in terms of the height of the input variable; we will see that we can derive a similar result for the \emph{quotients} of polynomials as well. \\
+
+\subsection{Proving the descent theorem}
+
+Thus far, we have proven three things:\\
+
+- For any elliptic curve $C(Q)$ and  real number $B$, the number of points $P \in C(Q)$ such that $h(P) \leq B$ is finite.\\
+
+- We have a lower bound $h(2P)$, namely that and any point $P \in C(Q)$ there is a $k$ independent of $P$ such that:\\
+
+$4h(P) - k \leq h(2P) $\\
+
+- We have an upper bound on $h(P + Q)$, namely that for all $Q \in C(Q)$ there is a $k_Q$ independent of $P$ such that:\\
+
+$h(P + Q) \leq 2h(P) + k_Q$\\
+
+- As mentioned in the introduction to this section, there is one final lemma needed to prove Mordell's theorem; namely that there is a finite set $A = {A_1, A_2 ... A_N}$ such that every $P \in C(Q)$ can be written as :\\
+
+$P = 2Q + A_i$ for some $i$\\
+
+This is equivalent to the statement that the image of the mapping $P \mapsto 2P$ (which turns out to be a subgroup of $C(Q)$) has a finite number of cosets in $C(Q)$. As already mentioned, Mordell proved this using some interesting properties of the curve $C(C)$, and unfortunately I cannot go over the proof here as it it too long.\\
+ \\
+These four lemmas can be brought together to prove there is a bound $B \in R$ such that every $P \in C(Q)$ with $h(P) < B$ can be written as a sum of points $P = P_1 + P_2 + P_3 + \dots P_N$ such that $h(P_i) < h(P) - 1$. Recursively applying this to our points $P_i$, we see that we can eventually write $P$ as a sum of points in the finite set.\\
+
+For a given $B$, let:\\
+
+$C(Q)_B = \{P \in C(Q) | h(P) \leq B\}$\\
+
+We will prove this now.\\
+
+Let $P_0 \in C(Q)$\\
+
+We know we can find an $A_i \in A$ and $Q$ in $C(Q)$ such that:\\
+
+$P_0 = A_i + 2P_1$\\
+
+equivalently:\\
+
+$2P_1 = P_0 - A_i$\\
+
+Applying our lower and upper bounds we see that:\\
+
+$4h(P_1) - k \quad \leq \quad  h(2P_1) =  P_0 - A_i  \quad  \leq  \quad  2h(P_0) + k_{-A_i} $\\
+
+Hence:\\
+
+$h(P_1) \leq \frac{1}{2}h(P_0) + \frac{1}{4} (k + k_{-A_i})$\\
+
+Hence, if we let $k_A = \max_{A_i \in A}(k_{-A_i})$, which we know exists as $A$ is finite, we can see that if $\frac{1}{4}(k + k_A) \leq \frac{1}{2}h(P_0) - 1$ then:\\
+
+$h(P_1) \leq \frac{1}{2}h(P_0) + \frac{1}{4} (k + k_{-A_i}) \leq \frac{1}{2}h(P_0) + \frac{1}{2}h(P_0) - 1 \leq h(P_0) - 1$\\
+
+We can also see that the restriction $\frac{1}{4}(k + k_A) \leq \frac{1}{2}h(P_0) - 1$ can be turned into $h(P_0) \geq B$ where $B = \frac{1}{2}(k + k_A) + 2$. we have hence proven that: if $P_j \in C(Q)$ then either: $h(P_j) \leq B$ or we can find a $P_{j + 1}$ such that $h(P_{j + 1}) \leq h(P_j) - 1$ and $P_j = 2P_{j+1} + A_i$ for some $A_i \in A$.\\
+
+We can apply this reasoning inductively to show that, for any given $P_0 \in C(Q)$, we can eventually find a $P_N \in C(Q)$ and $A_{i_1}, A_{i_2} \dots A_{i_N} \in A$ such that:\\
+
+$P_0 = 2^N P_N + A_{i_1} + 2 A_{i_2} + \dots + 2^{N-1}A_{i_N}$\\
+
+and $h(P_N) \leq B$. (equivalently, $P_N \in C(Q)_B$)\\
+
+Hence, we can see that our two sets $C(Q)_B$ and $A$ can generate $C(Q)$; however, as $C(Q)_B$ and $A$ are finite, their union is finite, so $C(Q)$ is finitely generated.
 
 \newpage
 
@@ -258,42 +400,43 @@ if \quad $ord_p(y_P) < 0$ \quad then \quad $ord_p(f(x_P)) < 0$ \quad so \quad $o
 
 and if \quad $ord_p(x_P) < 0$ \quad then \quad $3 \ ord_p(x_P) = ord_p(f(x_P)) = ord_p(y_P^2) = 2 \ ord_p(y_P)$\\
 
-Hence, if $ord_p(x_P) < 0$ or $ord_p(y_P) < 0$ we should be able to find an integer $v > 0$ such that: $ord_p(x_p) = -2v$ and $ord_p(y_P) = -3v$\\
+Hence, if $ord_p(x_P) < 0$ or $ord_p(y_P) < 0$ we should be able to find an integer $v > 0$ such that: $ord_p(x_P) = -2v$ and $ord_p(y_P) = -3v$\\
 
-Applying this with all primes p tells us that $x_P$ and $y_P$ are of the form:
+Applying this with all primes p tells us that $x_P$ and $y_P$ are of the form:\\
 
-$x_P = \frac{m}{e^2}$ \quad and \quad $y_P = \frac{n}{e^3}$ for some integers $m$, $n$ and $e$
+$x_P = \frac{m}{e^2}$ \quad and \quad $y_P = \frac{n}{e^3}$ for some integers $m$, $n$ and $e$\\
 
-This becomes tricky to analyse; however we are nearing in on the complexity measure we want to use for our points. Namely, if we define $t(P) = \frac{x_P}{y_P}$ then we see that, using the definition of $v$ above, $ord_p(t(P)) = ord_p(x_p) - ord_p(y_P) = v$. \\
+One way of defining a complexity measure for our points in $C(Q)$ for a given prime $p$ could be to say that $Complexity_p(P) = v$ where $v$ is the integer such that:  $ord_p(x_P) = -2v$ and $ord_p(y_P) = -3v$. We also need to extend this to points with that $ord_p(x_P) \geq 0$ and $ord_p(y_P) \geq 0$. To do this, we define $t(P) = \frac{x_P}{y_P}$ then we see that, using the definition of $v$ above, $ord_p(t(P)) = ord_p(x_p) - ord_p(y_P) = v$. \\ 
 
-Hence, if we can prove $ord_p(t(P)) \geq 0$ then, it cannot be the case that $ord_p(x_P) < 0$ or $ord_p(y_P) < 0$. hence we can prove $P$ has integer coordinates by proving  $ord_p(t(P)) \geq 0$ for all primes $p$\\
+Unfortunately, we will see later that just by examining $t(P)$ it is impossible to tell if a point $P$ has integer coordinates. In order to have some way to keep track of this, we define subsets of points than have more than $2v$ or $3v$ factors of $p$ in their $x$ and $y$ coordinate's denominators:\\
 
+$C(p^v) = \{(x, y) \in C(Q) | ord_p(x) \leq -2v$ and $ord_p(y) \leq -3v\}$\\
 
-Note that $P \in C(p^v)$ implies $t(P) \in p^v R$ but not the other way round; take for instance this case where $p = 2$:
+Then, to prove that a given point $P$ has integer coordinates, we just need to prove $P \notin C(p)$ for all primes $p$.\\
 
-$P = (2, 3)$ is on the curve $y^2 = x^3 - x + 3$ and we can see $t(P) = \frac{2}{3} \in 2^1 R$ but $P \notin C(2^1)$ 
+Note that $P \in C(p^v)$ implies $ord_p(t(P)) \geq v$ but not the other way round; take for instance this case where $p = 2$:\\
 
+$P = (2, 3)$ is on the curve $y^2 = x^3 - x + 3$ and we can see $ord_2(t(P)) = ord_2(\frac{2}{3}) = 1$ but $P \notin C(2^1)$ \\
 
+Now, given that both our $t$ function and our addition formula are defined completely algebraically over our sets of points, it makes sense that we may get some useful results from studying how they interact.
 
-\subsection{Examining t(P + Q)}
+\subsection{Investigating the p-adic order of P + Q}
 
-Let R be the ring of integers with p-adic order greater than or equal to 0 (ie, the integers which have powers of p only in their numerator if at all):\\
+For this section, we will fix a certain prime $p$.
+
+Let R be the ring of rational numbers with p-adic order greater than or equal to 0 (ie, the rationals which have powers of p only in their numerator if at all):\\
 
 $R = \{r \in Q \; | \; ord_p(r) \geq 0\}$\\
 
-Then we can see that our ideals of $R$ generated by $p^v$ are precisely the sets of rational numbers with p-adic order greater than than or equal to $v$:\\
+We can see that the units (elements in R with multiplicative inverses in R) are precisely the rationals with p-adic order 0. We can also see that the ideals of $R$ generated by $p^v$ for some $v$ are precisely the sets of rational numbers with p-adic order greater than than or equal to $v$:\\
 
 $p^vR = \{r \in Q \; | \; ord_p(r) \geq v\}$\\
 
-Let $P$ and $Q$ both be in $C(p^v)$ for some $v$. We wish to study the p-adic order of the coordinates of $P + Q$ to see if we get anything interesting.
-
-First, we will apply a protective transformation (what is the rationale?); and label our new coordinates $(t, s)$
-
-$(x, y) \mapsto (t, s)$ such that:
+Let $P$ and $Q$ both be in $C(p^v)$ for some $v$. We wish to study the p-adic order of the coordinates of $P + Q$ to see if we get anything interesting. As we saw in section 4.2, it is fruitful to define $t(P) = \frac{x_P}{y_P}$. We can see that we can actually make this value into a coordinate of P after applying a projective transformation $(x, y) \mapsto (t, s)$ given by:\\
 
 $t = \frac{x}{y}$ and $s = \frac{1}{y}$ \\
 
-The important thing to note here is that $P \in C(p^v)$ iff $ord_p(x_P) = -2v$ and $ord_p(y_P) = -3v$ iff $ord_p(t_P) = v$ and $ord_p(s_P) = 3v$; so this transformation doesn't loose any information about $P$ being in $C(p^v)$\\
+The important thing to note here is that $P \in C(p^v)$ iff $t_P \in p^v R$ and $s_P \in p^{3v} R$; so this transformation doesn't loose any information about whether or not $P$ is in $C(p^v)$\\
 
 This transformation is it's own inverse, so $x$ and $y$ are given by:\\
 
@@ -307,9 +450,9 @@ hence:\\
 
 $s = t^3 + a t^2 s + b t s^2 + c s^3$\\
 
-Now, to add $(t_P, s_P)$ and $(t_Q, s_Q)$ on our curve we simply follow the procedure for a standard cubic curve.
+Now, to add $(t_P, s_P)$ and $(t_Q, s_Q)$ on our curve we simply follow the procedure for a standard cubic curve.\\
 
-First, we find the line going through $t_P$ and $t_Q$:
+First, we find the line going through $t_P$ and $t_Q$:\\
 
 $s = \alpha t + \beta$ with $\alpha = \frac{s_P - s_Q}{t_P - t_Q}$ and $\beta = s_P - \alpha t_P$ \\
 
@@ -331,7 +474,7 @@ $t_P + t_Q - t_{P+Q} = -\frac{k_2}{k_3}$\\
 
 After this rather laborious bit of algebra, we can see a few things pop out at us: namely, if we can prove that $-\frac{k_2}{k_3} \in p^v R$ then we can prove that $t_{P+Q} \in p^v R$, strongly suggesting that $C(p^v)$ is a subgroup. Unfortunately, to get more information about $-\frac{k_2}{k_3}$ we must first go back and examine $\alpha$ and $\beta$. \\
 
-As $s_P$ and $s_Q$ are in $p^{3v}R$ and $t_P$ and $t_Q$ are only in $p^v R$ it seems intuitive that $\alpha \in p^{2v}R$, however the preceding information alone doesn't give us enough information to \emph{prove} this. We need to also use the information that links $s_P$ with $t_P$ and $s_Q$ with $t_Q$; namely that they satisfy the cubic equation for our curve. Examining the top part of our fraction for $\alpha$, , $s_P - s_Q$, gives:
+As $s_P$ and $s_Q$ are in $p^{3v}R$ and $t_P$ and $t_Q$ are only in $p^v R$ it seems intuitive that $\alpha \in p^{2v}R$, however the preceding information alone doesn't give us enough information to \emph{prove} this. We need to also use the information that links $s_P$ with $t_P$ and $s_Q$ with $t_Q$; namely that they satisfy the cubic equation for our curve. Examining the top part of our fraction for $\alpha$, $s_P - s_Q$, gives:
 
 \begin{align*} 
 s_P - s_Q &= t_P^3 - t_Q^3 + a \; t_P^2 s_P - a \; t_P^2 s_P + b \; t_P s_P^2 - b \; t_Q s_Q^2 + c \; s_p^3 - c \; s_Q^3 \\
@@ -354,18 +497,29 @@ and $B = (t_P^2 + t_P t_Q + t_Q^2) + a (t_P + t_Q)s_Q + b s_p^2$\\
 
 Hence: $\alpha = \frac{s_P - s_Q}{t_P - t_Q} = \frac{B}{1 - A}$\\
 
-Now, we can see that $B \in p^{2v}R$ and $A \in p^{2v} R$ from the fact that they are the sums of terms in these ideals. Hence, $ord_p(A) \geq 2v \geq 0 = ord_p(1)$ so $ord_p(1 - A) = 0$, meaning that we can conclude that $\alpha = \frac{B}{1 - A} \in p^{2v}R$
+Now, we can see that $B \in p^{2v}R$ and $A \in p^{2v} R$ from the fact that they are the sums of terms in these ideals. Hence, $ord_p(A) \geq 2v \geq 0 = ord_p(1)$ so $ord_p(1 - A) = 0$. Hence $1 - A$ is a unit in $R$ so $\frac{1}{1 - A} \in R$, meaning that we can conclude $\alpha = \frac{B}{1 - A} \in p^{2v}R$ \\
 
+Now, going back to our formulas for $k_3$ and $k_2$ we see that and applying similar reasoning, $k_2 \in p^{3v}R$ and $\frac{1}{k_3} \in R$ so $\frac{k_2}{k_3} \in p^{3v}R$. This finally allows us to see that:\\
 
-- prove that if $t(P) \in p^v R$ and $t(Q) \in p^v R$ then $t(P) + t(Q) + t(P * Q) \in p^{3v}R$ \\
+$t_P + t_Q - t_{P+Q} \in p^{3v}R$ \\
 
-- $t(P * Q) = - t(P + Q)$\\
+Written in modular arithmetic notation, this becomes even more suggestive that this is something that will be useful in our proof: \\
 
-- Hence $t(P) + t(Q) \equiv t(P + Q)  \quad (\bmod{p^{3v}R}$)\\
+$t_P + t_Q  \equiv t_{P+Q} \quad (\bmod{p^{3v}R})$ \\
 
-\newpage
+This shows that $t_{P+Q} \in p^{v}R$ but doesn't on it's own doesn't show that $P + Q \in C(p^v)$, we also have to show that $s_{P + Q} \in p^{3v}R$. This isn't too tricky; as $P*Q$ is on the same line as $P$ and $Q$:\\
 
-\subsection{Finishing off the proof}
+$s_{P*Q} = \alpha t_{P*Q} + \beta \in p^{3v}R$ \quad as $t_{P+Q}$, $\alpha$ and $\beta$ are in $p^v R$, $p^{2v} R$ and $p^{3v} R$ respectively\\
+
+Hence, we also have that $s_{P+Q} = -s_{P*Q} \in p^v R$, so our set of points $C(p^v)$ is closed under addition of points. In fact, as $P*Q = - (P+Q)$ and we have also in the process shown $P*Q \in C(p^v)$, $C(p^v)$ is a subgroup of $C(Q)$. \\
+
+To summarise the two main findings of our investigation:\\
+
+- We have a series of of subgroups of rational points given by: $C(Q) \supseteq C(p) \supseteq C(p^2) \supseteq C(p^3) \dots$\\
+
+- if $t_P$ and $t_Q$ are in $p^v R$ for some $v$, then: $t_P + t_Q  \equiv t_{P+Q} \quad (\bmod{p^{3v}R})$
+
+\subsection{Finishing off the Nagell-Lutz proof}
 
 Let $p$ be any prime number\\
 
@@ -411,7 +565,7 @@ Hence, for all points of finite order $P$ with $mP = 0$; either:
 
 Let $P \neq 0$ be a point of finite order. We have proved that if $(x, y) = P$ then $x$ and $y$ must be integers; however this unfortunately still gives us an infinite search space of possible candidates of points that could be torsion points on the curve. Thankfully, it is not too tricky to restrict this set to a finite set.\\
 
-First, we know that as $P$ is on the curve, \\
+First, we know that as $P$ is on the curve with integer coordinates, \\
 
 $y^2 = f(x) = x^3 + a x^2 + b x + c$\\
 
@@ -421,7 +575,30 @@ $y^2 - c = x(x^2 + a x + b)$\\
 
 Hence, we can see that for any candidate $y$, $x$ must divide $y^2 - c$ to give an integer point on the curve. So all we need to find is a finite set of candidate $y$ values; which is described by the following lemma:\\
 
-If $P = (x, y)$ is a point of finite order then $y$ divides the discriminant of $f$\\
+If $P = (x, y)$ is a point of finite order then $y$ divides the discriminant of $f$ or $y = 0$\\
+
+There may be other restrictions that we can place on $y$, but this one turns out to be the easiest. First, note that if $P$ is of order one then $P = 0$ and if $P$ is of order two, then $P = -P$ which can only be the case if $y = 0$. Hence, we can restrict our search to the points where $P$ and $2P$ are both non-zero points of finite order (and hence both have integer coordinates).
+
+Let $2P = (x_2, y_2)$\\
+
+then, we have: $x_2 = (\frac{f'(x)}{2y})^2 - 2x - a$\\
+
+hence: $(\frac{f'(x)}{2y})^2 = x_2 + 2x + a \in Z$\\
+
+However, we know that, as $\frac{f'(x)}{2y} \in Q$, it must be the case that $\frac{f'(x)}{2y} \in Z$ as non-integer rational can never be squared to give an integer. Hence, $y$ divides $f'(x)$. However, we also know that $y$ divides $f(x)$ from our Weierstrass equation. We can combine these two facts put a restriction on $y$. Now, consider the ideal in $Z[x]$ generated by $f$ and $f'$ (call it $I = <f, f'>$).\\
+
+If there is an integer $n \in I$, then we can conclude that we can find polynomials $G_1$ and $G_2$ in $Z[x]$ such that, for all $x$:\\
+
+$n = G_1(x)f(x) + G_2(x)f'(x)$\\
+
+Note that $n$ does not vary with respect to $x$, so if we could find such an $n$, then we know that \emph{every} $y$-coordinate for a point of finite order must divide this $n$, as \emph{every} $y$-coordinate for a point of finite order divides both $f(x)$ and $f'(x)$ for some integer $x$.\\
+
+Thankfully, using the theory of resultants and discriminants, we can prove that it suffices to set $n = \Delta(f)$, where $\Delta(f) = -4a^3c + a^2b^2 + 18abc - 4b^3 - 27c^2$ is the discriminant of f. We have that if $A(x)$ and $B(x)$ are two polynomials in $Z[x]$, then the resultant $Res(A, B)$ (an integer quantity calculated by taking the determinant of a specific matrix of $A$ and $B$'s coefficients) is in the ideal generated by $A$ and $B$. In the case where $A$ and $B$ are $f$ and $f'$ for some polynomial $f$, The resultant divided by the leading coefficient of $f$ (which in our case is one) is simply the discriminant of $f$: \\
+
+$Res(f, f') = \Delta(f)$\\
+
+Hence, we can see that $\Delta(f) \in I$, so for any point with integer coordinates $P = (x, y)$ where $2P$ also has integer coordinates, we can see that $y$ must divide $\Delta(f)$, concluding our proof.
+
 
 \subsection{An algorithm for generating the set of torsion candidates}
 
