@@ -89,6 +89,7 @@ Yuri Matiyasevich's negative solution to Hilbert's tenth problem: no algorithm (
 
 \subsection{Assumed prior knowledge}
 
+- Written to be accessible to first or second-year undergraduates
 - Algebra: knowledge of a group, ring and field
 
 \newpage
@@ -97,15 +98,15 @@ Yuri Matiyasevich's negative solution to Hilbert's tenth problem: no algorithm (
 
 \subsection{Homogeneous Coordinates}
 
-In the introduction section, I hinted at the idea that we can think of linearly related solutions, such as $(1, 2, 3)$ and $(2, 4, 6)$ to our homogeneous equation  as one line in $R^3$ and we can make this rigorous by defining a new kind of space. We kind of already did this when we divided by $Z$, but this feels unnatural because it is breaking the symmetry of our equation between $X$, $Y$ and $Z$. We will see later that this kind of space is called \emph{projective space} and when we do geometry on this space it is called \emph{projective geometry}, hence the name of this section.\\
+In the introduction section, I hinted at the idea that we can think of linearly related solutions, such as $(1, 2, 3)$ and $(2, 4, 6)$ to our homogeneous equation  as one line in $R^3$. We will see that this notion can be made rigorous by defining a new kind of space. We kind of already did this when we divided by $Z$, but this feels unnatural because it is breaking the symmetry of our equation between $X$, $Y$ and $Z$. We will see later that this kind of space is called \emph{projective space} and when we do geometry on this space it is called \emph{projective geometry}, hence the name of this section.\\
 
-We want to define a \emph{point} such that all the solutions $(t, 2t, 3t)$ are considered to be the same, just as when we divided through by $Z$ in our introduction. So it makes sense to say a point in projective space as a ratio between the X, Y and Z coordinates, :\\
+We want to define a \emph{point} in projective such that all the solutions $(t, 2t, 3t)$ are considered to be the same object, which is precisely what happened when we divided through by $Z$ in our introduction. So it makes sense to say a point in projective space as a ratio between the $X$, $Y$ and $Z$ coordinates, :\\
 
 We denote $P = [X : Y : Z] \in P_R^2$ for real numbers $X$, $Y$ and $Z$ which are called the \emph{homogeneous} coordinates of $P$;\\
 
 where two points are said to be equal, ie $[X : Y : Z] = [X' : Y' : Z']$ if and only if we can find a $t \in R$ satisfying $X = tX', Y =  tY'$ and $Z = tZ'$\\
 
-Unfortunately, this on it's own is not a well-defined equivalence relation; every point is equal to $[0 : 0 : 0]$. To fix this, we simply ban this point and say if  $[X : Y : Z] \in P_R^2$  then one of $X$, $Y$ and $Z$ is non-zero. It is relatively straightforward to now mentally check that this definition of equality satisfies reflexivity, symmetry and transitivity.\\
+Unfortunately, this on it's own is not a well-defined equivalence relation; every point is equal to $[0 : 0 : 0]$. To fix this, we simply ban this point and say if  $[X : Y : Z] \in P_R^2$  then at least one of $X$, $Y$ and $Z$ is non-zero. It is relatively straightforward to now mentally check that this definition of equality satisfies reflexivity, symmetry and transitivity.\\
 
 Note that, if you view the homogeneous coordinates $X$, $Y$ and $Z$ as a point $(X, Y, Z)$ in $R^3$ then our \emph{points} in $P_R^2$ (the equivalence classes of coordinates which give equal points) can be visualised as \emph{lines} going through the origin in $R^3$. Hence, it makes intuitive sense that our \emph{lines} in $P_R^2$ could be visualised as \emph{planes} containing the origin in $R^3$. This intuition gives us the definition of a line in $P_R^2$:\\
 
@@ -138,71 +139,23 @@ When we divided by $Z$ in our introduction, we took each point in $P_R^2$ and ma
 
 \subsection{Projective Transformations}
 
+- Intro to projective transformations:
 
+- What projective transformations are
 
-\subsection{The Wierstrauss normal form}
+- projective screen analogy
 
-Let us start with the cubic curve defined in non-homogeneous coordinates by:
+- What happens when you apply them to solution sets of equations?
 
-\[ x^{3} - 4 x^{2} y - 4 x^{2} - 2 x y^{2} - 2 x y - 3 y^{3} - 5 y^{2} - 2 y\ =\ 0 \]
+- Proof that they conserve lines
 
-We will show that this curve can be transformed, using only projective transformations, into the much simpler \emph{elliptic curve}:
+\subsection{Cubic curves in projective space}
 
-\[y^2 = x^3 - x + 1\]
+Just as we defined a plane in projective space as a sum of $X$, $Y$, and $Z$ terms; We define a cubic curve in projective space as the set of solutions to a polynomial of the form:
 
-The first key is to see that our cubic curve has a point of multiplicity $3$ at [0: -1: 1], whereas our elliptic curve has a point of multiplicity $3$ at [0: 1: 0]. Hence, it makes sense that we should find a transformation that maps the former point to the latter point. A straightforwards transformation we could pick is:
+\[\sum_{i + j + k = 3} A_{ijk}X^i Y^j Z^k = A_0 X^3 + A_1 Y^3 + A_2 Z^3 + A_3 X^2Y + A_4 X^2Z + A_5 Y^2X + A_6 Y^2Z + A_7 Z^2X + A_8 Z^2Y + A_9 XYZ = 0\]
 
-\[ T_1 = \begin{bmatrix}
-    1 & 0 & 0\\
-    0 & -1 & 0\\
-    0 & 1 & 1
-\end{bmatrix},
-\quad
-T_1: <X, Y, Z> \; \mapsto \; <X, -Y, Y + Z>
-\]
-
-Subbing this to our equation gives:
-
-\[x^{3} - 4 x^{2} + 2 x y - y^{2} + 2 y = 0\]
-
-Equivalently:
-
-\[y^2 - 2 x y - 2y = x^3 + 4x^2\]
-
-As we see, our curve has been significantly simplified, however it still has some pesky $xy$ and $y$ terms that means that it doesn't have the nice symmetry about the $y$ axis that our target curve has. To get it in the desired form, we complete the square of the right hand side to see how we should transform our y coordinate.
-
-\[(y - (x + 1))^2 - (x + 1)^2 = x^3 + 4x^2\]
-
-Hence, it makes sense to pick a transformation that maps $y - (x + 1) \mapsto y$. One good candidate is:
-
-\[ T_1 = \begin{bmatrix}
-    1 & 0 & 0\\
-    -1 & 1 & -1\\
-    0 & 0 & 1
-\end{bmatrix},
-\quad
-T_2: <X, Y, Z> \; \mapsto \; <X, Y - X - Z, Z>
-\]
-
-After this transformation, our curve has equation:
-
-\[y^{2} = x^{3} - 3 x^{2} + 2 x  + 1\]
-
-This curve is already in the "Weierstrass normal form"; however we can simplify it even further. Namely, we know that the $x^2$ term ($-3$) is the sum of the roots of the cubic on the right, so if we apply a transformation that maps $T_3: x \mapsto x - 1$. This gives us the final equation of our curve:
-
-\[y^{2} = x^{3} - x  + 1\]
-
-This process can be replicated for \emph{any} cubic curve where we have a point of multiplicity three, which may be projectively transformed into an elliptic curve of the form:
-
-\[y^2 = x^3 + bx + c\]
-
-While this is interesting, it is not clear why it is important. The first thing to note is that we can combine our projective transformations into one  projective transformation $T = T_3 T_2 T_1$ which maps rational points on our original cubic curve $C$ to rational points on our elliptic curve $E$. As all projective transformations are invertible, this means that $T$ is in fact a bijection, so any rational point on $C$ can be converted into a rational point on $E$ and vice versa. On top of this, we know that projective transformations map lines to lines, meaning that for any points $P$ and $Q$ on $T(P *_C Q) = T(P) *_E T(Q)$. Extending this a bit further, it is not tricky to see that it must be the case that:
-
-\[T(P +_C Q) = T(P) +_E T(Q)\]
-
-Hence, we can see that not only is T a bijection between the rational points of our curve, but it is in fact an \emph{isomorphism} between the groups of rational points. This means that anything we discover about the group of rational points of our simpler elliptic curve can be extended to all cubic curves, and we will see it will be easier to work with elliptic curves, mainly because it is much easier to add points on elliptic curves.
-
-\subsection{Groups over Cubic Curves}
+It is not tricky to check if $(X, Y, Z)$ satisfies this equation, then so does $(tX, tY, tZ)$, so the solution set to this equation is a well-defined set of points in projective space.
 
 Let $C(F)$ be a cubic curve working in some field $F$
 
@@ -262,7 +215,77 @@ $
 
 therefore, if A + B = (A * B) * O then (A + B) + C = A + (B + C)
 
+
+\subsection{The Wierstrauss normal form}
+
+Now that we have developed a theory of projective transformations and a theory of cubic curves, the natural question to ask is:\\
+
+What happens when we apply projective transformations to cubic curves? Can we use projective transformations to simplify their equations?\\
+
+In fact, we will see that, working in $P_Q^2$, all cubic curves can be projectively transformed into a type of cubic curve called an \emph{elliptic curve}, that has an equation in the \emph{wierstrauss normal form}. It is much easier to give and example doing this if we start with a rational point of multiplicity three, however there is a more complex method one can use on cubic curves where one doesn't have a rational point of multiplicity three, which can be found in Silverman.\\
+
+Let us start with the cubic curve defined in non-homogeneous coordinates by:
+
+\[ x^{3} - 4 x^{2} y - 4 x^{2} - 2 x y^{2} - 2 x y - 3 y^{3} - 5 y^{2} - 2 y\ =\ 0 \]
+
+We will show that this curve can be transformed, using only projective transformations, into the much simpler elliptic curve:
+
+\[y^2 = x^3 - x + 1\]
+
+The first key is to see that our cubic curve has a point of multiplicity $3$ at [0: -1: 1], whereas our elliptic curve has a point of multiplicity $3$ at [0: 1: 0]. Hence, it makes sense that we should find a transformation that maps the former point to the latter point. A straightforwards transformation we could pick is:
+
+\[ T_1 = \begin{bmatrix}
+    1 & 0 & 0\\
+    0 & -1 & 0\\
+    0 & 1 & 1
+\end{bmatrix},
+\quad
+T_1: <X, Y, Z> \; \mapsto \; <X, -Y, Y + Z>
+\]
+
+Subbing this to our equation gives:
+
+\[x^{3} - 4 x^{2} + 2 x y - y^{2} + 2 y = 0\]
+
+Equivalently:
+
+\[y^2 - 2 x y - 2y = x^3 + 4x^2\]
+
+As we see, our curve has been significantly simplified, however it still has some pesky $xy$ and $y$ terms that means that it doesn't have the nice symmetry about the $y$ axis that our target curve has. To get it in the desired form, we complete the square of the right hand side to see how we should transform our y coordinate.
+
+\[(y - (x + 1))^2 - (x + 1)^2 = x^3 + 4x^2\]
+
+Hence, it makes sense to pick a transformation that maps $y - (x + 1) \mapsto y$. One good candidate is:
+
+\[ T_1 = \begin{bmatrix}
+    1 & 0 & 0\\
+    -1 & 1 & -1\\
+    0 & 0 & 1
+\end{bmatrix},
+\quad
+T_2: <X, Y, Z> \; \mapsto \; <X, Y - X - Z, Z>
+\]
+
+After this transformation, our curve has equation:
+
+\[y^{2} = x^{3} - 3 x^{2} + 2 x  + 1\]
+
+This curve is already in the "Weierstrass normal form"; however we can simplify it even further. Namely, we know that the $x^2$ term ($-3$) is the sum of the roots of the cubic on the right, so if we apply a transformation that maps $T_3: x \mapsto x - 1$. This gives us the final equation of our curve:
+
+\[y^{2} = x^{3} - x  + 1\]
+
+This process can be replicated for \emph{any} cubic curve where we have a point of multiplicity three, which may be projectively transformed into an elliptic curve of the form:
+
+\[y^2 = x^3 + bx + c\]
+
+While this is interesting, it is not clear why it is important. The first thing to note is that we can combine our projective transformations into one  projective transformation $T = T_3 T_2 T_1$ which maps rational points on our original cubic curve $C$ to rational points on our elliptic curve $E$. As all projective transformations are invertible, this means that $T$ is in fact a bijection, so any rational point on $C$ can be converted into a rational point on $E$ and vice versa. On top of this, we know that projective transformations map lines to lines, meaning that for any points $P$ and $Q$ on $T(P *_C Q) = T(P) *_E T(Q)$. Extending this a bit further, it is not tricky to see that it must be the case that:
+
+\[T(P +_C Q) = T(P) +_E T(Q)\]
+
+Hence, we can see that not only is T a bijection between the rational points of our curve, but it is in fact an \emph{isomorphism} between the groups of rational points. This means that anything we discover about the group of rational points of our simpler elliptic curve can be extended to all cubic curves, and we will see it will be easier to work with elliptic curves, mainly because it is much easier to add points on elliptic curves.
+
 \newpage
+
 
 \section{Mordell's theorem}
 
@@ -549,7 +572,13 @@ We can see that the units (elements in R with multiplicative inverses in R) are 
 
 Let $P$ and $Q$ both be in $C(p^v)$ for some $v$. We wish to study the p-adic order of the coordinates of $P + Q$ to see if we get anything interesting. As we saw in section 4.2, it is fruitful to define $t(P) = \frac{x_P}{y_P}$. We can see that we can actually make this value into a coordinate of P after applying a projective transformation $(x, y) \mapsto (t, s)$ given by:
 
-\[ t = \frac{x}{y} \ \text{and} \ s = \frac{1}{y} \]
+\[ t = \frac{x}{y} \ \text{and} \ s = \frac{1}{y} 
+\quad \text{described by matrix:} \quad \begin{bmatrix}
+    1 & 0 & 0\\
+    0 & 0 & 1\\
+    0 & 1 & 0
+\end{bmatrix}
+\]
 
 The important thing to note here is that $P \in C(p^v)$ iff $t_P \in p^v R$ and $s_P \in p^{3v} R$; so this transformation doesn't loose any information about whether or not $P$ is in $C(p^v)$\\
 
