@@ -11,6 +11,8 @@
 % Useful packages
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{natbib}
+
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 
 \title{Elliptic Curves and the Nagell-Lutz theorem:\\a guided reinvention}
@@ -28,21 +30,21 @@
 
 \subsection{An innocent-looking problem}
 
-Suppose one wanted to find all solutions to the polynomial equation:\\
+Suppose one wanted to find all solutions to the polynomial equation:
 
-$3 X^3 +  2 X Y^2 + 2 Y^3 = Z^3$ \quad For integers $X$, $Y$ and $Z$. \\
+\[3 X^3 +  2 X Y^2 + 2 Y^3 = Z^3 \quad \text{For integers $X$, $Y$ and $Z$}\].
 
  One may realise that, given a solution; say $(X, Y, Z) = (1, 2, 3)$, one can see that we can generate infintely many more solutions $(X, Y, Z) = (2, 4, 6), \; (3, 6, 9), \; \dots \; (n, 2n, 3n) \; \dots $. This property of our equation is special, it is called \emph{homogeneity} and stems from the fact that if we sum up the powers of $X$, $Y$ and $Z$ in each of the terms of our equation, we get the same integer (in this case, three). \\
  
  Finding solutions to homogeneous equations is of special importance to number theorists, examples including the Fermat equations $X^m + Y^m = Z^m$. \\
  
- In essence, we can think of each of these infinite sets of solutions as all part of the same solution, and we can see that, if we view our solutions as coordinates in $R^3$, each one of our infinite sets of solutions can be viewed as a line going through the origin and and a point with integer coordinates. Dividing our original equation by $Z$, we can see that our problem is equivalent to finding the rational solutions to the equation:\\
+ In essence, we can think of each of these infinite sets of solutions as all part of the same solution, and we can see that, if we view our solutions as coordinates in $R^3$, each one of our infinite sets of solutions can be viewed as a line going through the origin and and a point with integer coordinates. Dividing our original equation by $Z$, we can see that our problem is equivalent to finding the rational solutions to the equation:
  
- $3x^3 + 2xy + 2y^3 = 1$\\
+ \[3x^3 + 2xy^2 + 2y^3 = 1\]
  
-With rational solution $(x, y) = (\frac{m}{n}, \frac{p}{q})$ being converted into $(X, Y, Z) = (m, p, nq)$ and integer solution $(X, Y, Z)$ being converted into $(\frac{X}{Z}, \frac{Y}{Z})$. However, note that this conversion isn't well-defined when $Z = 0$, so we still have to consider the integer solutions to $3 X^3 +  2 X Y^2 + 2 Y^3 = 0$. However; as this is also a homogeneous polynomial equation, we can repeat our process, this time by dividing by $Y$ to see we want to find solutions to: \\
+With rational solution $(x, y) = (\frac{m}{n}, \frac{p}{q})$ being converted into $(X, Y, Z) = (m, p, nq)$ and integer solution $(X, Y, Z)$ being converted into $(\frac{X}{Z}, \frac{Y}{Z})$. However, note that this conversion isn't well-defined when $Z = 0$, so we still have to consider the integer solutions to $3 X^3 +  2 X Y^2 + 2 Y^3 = 0$. However; as this is also a homogeneous polynomial equation, we can repeat our process, this time by dividing by $Y$ to see we want to find solutions to: 
 
-$3 x^3 + 2 x + 2 = 0$ \quad for rational $x$ and $X^3 = 0$ for integer $X$\\
+\[3 x^3 + 2 x + 2 = 0 \quad \text{for rational $x$ and $X^3 = 0$ for integer $X$}\]
 
 Hence, we can see that there is a one-to-one correspondence between the "lines" of integer solutions to $3 X^3 +  2 X Y^2 + 2 Y^3 = Z^3$ and rational solutions to  $3x^3 + 2xy + y^3 = 1$, \quad $3 x^3 + 2 x + 2 = 0$, and $X^3 = 0$. Thinking back to our visualisation of our solutions to our integer equation as lines, we can see that our first division resembles looking at the intersection of the plane $Z = 1$ and our solution lines, and the fact that we could recursively apply this procedure is a hint that the \emph{projective space} we are working in has some kind of recursive structure.
 
@@ -50,47 +52,28 @@ Now, we can trivially solve $X^3 = 0 $ to see that $X = 0$ is the only solution 
 
 These solutions form an \emph{algebraic curve} when visualised in the $x,y-$plane, and through analysing this curve geometrically we will be able to get some description of our solution.\\
 
-Note that, given two points $(x_1, y_1)$ and $(x_2, y_2)$ on a degree-3 algebraic curve defined by $f(x, y) = 0$, we can find a third point $(x_3, y_3)$ on the curve by projecting a line $\alpha x + \beta y + \gamma = 0$ through them and looking at the intersection with the curve (in general*). On top of this, when we solve these simultaneous equations by eliminating one variable we get two cubics for the $x$ and $y$ coordinates, $a_3 x^3 + a_2 x^2 + a_1 x + a_0 = 0$ , \quad $b_3 y^3 + b_2 y^2 + b_1 y + b_0 = 0$. We know that the sums $x_1 + x_2 + x_3 = -\frac{a_2}{a_3}$ and $y_1 + y_2 + y_3 = -\frac{b_2}{b_3}$ are satisfied; so if $x_1$, $x_2$ and our coefficients are in some field $F$, $x_3$ must also be in $F$; and likewise for our $y$ coordinates, this means that, given a pair of rational solutions we can get another rational solution by projecting a line. For example,
-
-
-\[ <example> \]
+Note that, given two points $(x_1, y_1)$ and $(x_2, y_2)$ on a degree-3 algebraic curve defined by $f(x, y) = 0$, we can find a third point $(x_3, y_3)$ on the curve by projecting a line $\alpha x + \beta y + \gamma = 0$ through them and looking at the intersection with the curve (in general*). On top of this, when we solve these simultaneous equations by eliminating one variable we get two cubics for the $x$ and $y$ coordinates, $a_3 x^3 + a_2 x^2 + a_1 x + a_0 = 0$ , \quad $b_3 y^3 + b_2 y^2 + b_1 y + b_0 = 0$. We know that the sums $x_1 + x_2 + x_3 = -\frac{a_2}{a_3}$ and $y_1 + y_2 + y_3 = -\frac{b_2}{b_3}$ are satisfied; so if $x_1$, $x_2$ and our coefficients are in some field $F$, $x_3$ must also be in $F$; and likewise for our $y$ coordinates, this means that, given a pair of rational solutions we can get another rational solution by projecting a line.
 
 * the case where $a_3$ or $b_3$ are zero corresponds to the case where our line meets our curve asymptotically, or "at infinity", and we will see more about this when we go into projective geometry.\\ 
 
 The first theorem I will explain is Mordell's theorem, which tells us that we can take a finite set of rational points on our curve and, by projecting lines through them, can get every other rational point on our curve.\\
 
-If we now imagine our points $(x_1, y_1)$ and $(x_2, y_2)$ slowly getting closer and closer to each other on our curve, we may also notice that we could just take one point, draw the tangent from it, and get another rational point. For example, 
+If we now imagine our points $(x_1, y_1)$ and $(x_2, y_2)$ slowly getting closer and closer to each other on our curve, we may also notice that we could just take one point, draw the tangent from it, and get another rational point. For example,\\ 
 
-\[<example>\]
+Take $\left( \frac{1}{3}, \  \frac{2}{3}\right)$, the point corresponding to the initial solution we found. Then, by projecting the tangent line through our curve and seeing where it intersects, we see that we can get a new rational point, namely: $\left( - \frac{3299}{5943}, \  \frac{6767}{5943}\right)$\\
 
-The second theorem we will prove is the Nagell-Lutz theorem, which tells us how to find the points will eventually "loop" if we continually apply this process of taking a tangent and seeing where it intersects the curve. For example,
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{desmos-graph.png}
+\caption{\label{fig:into curve} The tangent of the point $\left( \frac{1}{3}, \  \frac{2}{3}\right)$ on the curve $3x^3 + 2xy^2 + 2y^3 = 1$.}
+\end{figure}
 
-\[<example>\]
-
-After looking deeper into the theory of cubic curves, we will see why these looping points are of particular interest. But first, a reader may be wondering: why are we focusing on cubic curves? Why not try and solve the general case of n-degree curves?
-
-\subsection{Why cubic plane curves?}
-
-one variable:
-
--pretty much fully solved?
-
-two variables:
-
-- degrees 1 and 2 solved
-
-- degree 3 much harder (not all questions answered)
-
-three variables:
-
-- ???
-
-Yuri Matiyasevich's negative solution to Hilbert's tenth problem: no algorithm (including the algorithm of all human mathematicians) will be able to determine whether or not a given diophantine equation has solutions.
+The second theorem we will prove is the Nagell-Lutz theorem, which tells us how to find the points will eventually "loop" if we continually apply this process of taking a tangent and seeing where it intersects the curve. After looking deeper into the theory of cubic curves, we will see why these looping points are of particular interest.
 
 \subsection{Assumed prior knowledge}
 
-- Written to be accessible to first or second-year undergraduates
-- Algebra: knowledge of a group, ring and field
+This report is written to be accessible to first or second-year undergraduates, however the main part of theory that will be assumed knowledge will be familiarity with the concepts of groups, rings and fields. It will follow and use many of the same styles of proofs as \cite{silverman}, however will try and shine a different light on these proofs and fill in some of the parts missed. I made the plots using \cite{desmos} and used my python code for calculations which can be found at \cite{github}.
+
 
 \newpage
 
@@ -129,100 +112,287 @@ Z \\
 $$
 
 From this we can see that, if the two lines are distinct, then $A  B  C$ and
-$\Bar{A}  \Bar{B}  \Bar{C} $ will be linearly independent, as if they weren't, we would be able to reduce their defining equations onto each other. Hence our matrix will have rank 2 and so by the rank-nullity theorem we will have one linearly independent solution for $X$, $Y$ and $Z$, corresponding to our point of intersection in $P_R^2$. This property of lines in $P_R^2$ is different to, say, $R^2$, where parallel lines intersect nowhere.
-\\
-When we divided by $Z$ in our introduction, we took each point in $P_R^2$ and mapped it to a point in $R^2$, barring the points where the $Z$ coordinate was $0$. The obvious way to map points in $P_R^2$ onto a surface is to look at projecting them onto the unit sphere using the angles as coordinates, For example mapping $[1 : 2 : 3]$ to the point $(arcsin(), arccos())$. The problem with this approach is that this takes a point with rational coordinates and maps it to a point without rational coordinates; meaning it isn't very useful for us. Instead, we have to suffice by projecting our projective plane onto a flat screen.
+$\Bar{A}  \Bar{B}  \Bar{C} $ will be linearly independent, as if they weren't, we would be able to reduce their defining equations onto each other. Hence our matrix will have rank 2 and so by the rank-nullity theorem we will have one linearly independent solution for $X$, $Y$ and $Z$, corresponding to our point of intersection in $P_R^2$. This property of lines in $P_R^2$ is different to, say, $R^2$, where parallel lines intersect nowhere.\\
 
-- recursive definition
+When we divided by $Z$ in our introduction, we took each point in $P_R^2$ and mapped it to a point in $R^2$, barring the points where the $Z$ coordinate was $0$. The obvious way to map points in $P_R^2$ onto a surface is to look at projecting them onto the upper half of the unit sphere, using the angles as coordinates. For example mapping $[1 : 2 : 3]$ to the point $(arctan(\frac{1}{2}), arccos(\frac{3}{\sqrt{5}}))$. The problem with this approach is that this takes a point with rational coordinates and maps it to angles without rational coordinates; meaning it isn't very useful for us. Instead, we have to suffice by projecting our projective plane onto a flat screen.\\
+
+Specifically, for each line that goes through the origin in $R^3$, we can look at where this line intersects the plane $Z = 1$; unless the line happens to be parallel to this plane. This is one way of visualising the mapping that takes each point $P_R^2$ with non-zero $Z$ and maps it to a point in the euclidean plane $R^2$ taking $[X : Y : Z] \mapsto (\frac{X}{Z}, \frac{Y}{Z})$. Now let us examine the structure of the points where the $Z$ coordinate is $0$. We see that the set of ratios $[X : Y : 0]$ is very like the projective plane, just with one less dimension. In fact, this structure is called the \emph{projective line}, denoted $P_R^1$ and when view it as a "line at infinity" outside of $R^2$ where the $Z$ coordinate $0$ points get mapped to when we project $P_R^2$ onto $Z = 1$. Thinking about this more generally gives the n-dimensional case, which we won't use but is good to know for intuition:
+
+\[P_R^n \cong A^n \cup P_R^{n-1}\]
 
  Note that in this section I used the real numbers, $R$ as the field that we were working over. However, the proofs used no special properties about the real numbers, hence we could replace $R$ with any field $F$ and get the same results. In general, we call $P_F^2$ the \emph{projective plane over the field} $F$,  alot of algebraic geometry is concerned with $P_C^2$ for instance, however for us it suffices to know that $P_Q^2$ is well defined.
 
 \subsection{Projective Transformations}
 
-- Intro to projective transformations:
+Note that our decision to project onto the plane $Z = 1$ was completely arbitrary. We could have instead projected onto the plane $Y = 2$, mapping the point $[X : Y : Z]$ to $(\frac{2X}{Y}, \frac{2Z}{Y})$ and taking care of points with 0 $Y$ coordinate. In general, we can identify a screen that we want to project onto with three vectors: $\vec{v_x}, \vec{v_y}, \vec{c}$. If we want to project a point $[X : Y : Z]$ onto $(x, y) \in R^2$ through the screen defined by these vectors, we find the unique $x$ and $y$ values such that 
 
-- What projective transformations are
+\[\vec{c} + x \vec{v_x} + y \vec{v_y}\]
 
-- projective screen analogy
+Is in the line through the origin in $R^3$ which contains $(X, Y, Z)$. Equivalently, we want: 
 
-- What happens when you apply them to solution sets of equations?
+\[[X : Y : Z] = [c_1 + x (v_x)_1 + y (v_y)_1  \ : \ c_2 + x (v_x)_2 + y (v_y)_2 \ : \ c_3 + x (v_x)_3 + y (v_y)_3]\]
 
-- Proof that they conserve lines
+In fact, we can combine these three vectors into a matrix: $M = (v_x | v_y | c)$. Using this notation, the screen $Z = 1$ is represented by the identity matrix $\mathbf{I}$ and the case where we want to project onto the screen $Y = 2$ is given by the matrix:
+
+\[
+M =
+\begin{bmatrix}
+    1 & 0 & 0 \\
+    0 & 0 & 2 \\
+    0 & 1 & 0
+\end{bmatrix}
+\]
+
+Thinking about observing points and curves in $P_R^2$ from different angles actually gives rise to an equivalent notion, namely the \emph{projective transformation}. A projective transformation $T: P_R^2 \rightarrow P_R^2$ is way of transforming our points in $P_R^2$ using a $3 \times 3$ matrix. The way we do this is we simply take any point $[X : Y : Z] \in P_R^2$, apply $T$ to the vector $<X , Y, Z>$ to get the new vector $<X', Y', Z'> = T<X, Y, Z>$, and then say the result is the point $[X' : Y' : Z'] \in P_R^2$. This is a well defined transformation as linear transformations have the property that:\\
+
+\[T(<kX, kY, kZ>) = k T(<X, Y, Z>)\]
+
+So no matter what 3-tuple of reals we choose to represent our point in $P_R^2$, applying $T$ will always give us an equivalent point in $P_R^2$. Another way one can think about this is visualising $T$ transforming lines through the origin in $R^3$ (each of these lines representing a point in $P_R^2$). In fact, visualising $T$ transforming planes containing the origin in $R^3$ to other planes tells us that $T$ maps lines in $P_R^2$ to lines in $P_R^2$. In fact, it is not too hard to prove that if one has a transformation in $P_R^2$ that preserves lines; then there must be a matrix representing it. This gives the theorem:\\
+
+A transformation $T: P_R^2 \rightarrow P_R^2$ maps only maps lines in $P_R^2$ to lines in $P_R^2$ if it is a projective transformation.\\
+
+This is what will make projective transformations so powerful for us; in the introduction we saw that we were primarily concerned with projecting lines through cubics to get new rational points on the cubic, so we can see that applying a projective transformation will preserve most of the structure we get from this. Now, how does the notion of projecting onto a screen relate to this? First, for a given screen $M$,let $Proj_M : P_R^2 \rightarrow R^2 \cup P_R^1 $
+
+For all $P \in P_R^2$ and all non-singular matrices $M$, let $M(P)$ be $P$ transformed under the projective transformation described by $M$. Then, we have:
+
+\[Proj_{\mathbf{I}}(P) = Proj_M(M(P))\]
+
+Equivalently, for all $Q \in P_R^2$:
+
+\[Proj_{\mathbf{I}}(M(Q)) = Proj_{M^{-1}}(Q)\]
+
+In essence, this means that these two procedures are equivalent:\\
+
+- Transforming any set of points using $M$ and then projecting onto the screen defined by $\mathbf{I}$ ($Z = 1$)\\
+
+- Keeping our set of points fixed and projecting them onto the screen defined by $M^{-1}$ ($Z = 1$ transformed by $M^{-1}$)\\
+
+This gives us a good intuition for what our projective transformations are doing when we do observe the result through the screen $Z  = 1$, specifically, we can think of this as viewing the same set of points but from a different angle.\\
+
+Now, let us examine what happens when we apply projective transformations to sets of points defined by solutions to equations. Specifically, if $C$ is a curve defined by the zero set of a polynomial $f$, can we find a polynomial $g$ which has a zero set equivalent to $C$ transformed by projective transformation $T$; which we will denote $T(C)$?
+
+\[C = \{[X : Y : Z] \in P_R^2 \ | \ f(X, Y, Z) = 0 \}\]
+
+As projective transformations are invertible, we can say that a given point $P \in P_R^2$ is in $T(C)$ if and only if $T^{-1}(P) \in C$ Hence:
+
+\begin{align*}
+    g(X, Y, Z) = 0 & \iff [X : Y : Z] \in T(C)\\
+                   & \iff T^{-1}([X : Y: Z]) \in C \\
+                   & \iff f(T^{-1}<X, Y, Z>) = 0
+\end{align*}
+
+For example, suppose we have the line $L \subset P_R^2$ defined by equation $L : X + 2Y + 3Z = 0$ and want to transform it by matrix $T$ given by:
+
+\[T = 
+\begin{bmatrix}
+    1  & 1 & 0\\
+    0  & 2 & 0\\
+    -1 & 0 & 1\\
+\end{bmatrix}
+\quad 
+\text{so}
+\quad
+T^{-1} = 
+\begin{bmatrix}
+    1  & -\frac{1}{2} & 0\\
+    0  &  \frac{1}{2} & 0\\
+    1 &  -\frac{1}{2} & 1\\
+\end{bmatrix}
+\]
+
+Then, for a general point $[X : Y : Z] \in P_R^2$, 
+
+\[T^{-1}([X : Y : Z]) = [X - \frac{Y}{2} : \frac{Y}{2} : X - \frac{Y}{2} + Z] = [2X - Y : Y : 2X - Y + 2Z]\]
+
+So our equation for $T(L)$ is given by:
+
+\[T(L) : (2X - Y) + 2(Y) + 3(2X - Y + 2Z) = 8X - 2Y + 6Z = 0\]
+
+
+
 
 \subsection{Cubic curves in projective space}
 
-Just as we defined a plane in projective space as a sum of $X$, $Y$, and $Z$ terms; We define a cubic curve in projective space as the set of solutions to a polynomial of the form:
+Just as we defined a plane in projective space as a sum of $X$, $Y$, and $Z$ terms; We define a cubic curve $C(F) \subset P_F^2$ in projective space as the set of solutions to a polynomial of the form:
 
+\[C(F) \ \text{ is the set of points } \ [X : Y : Z]\in P_F^2 \ \text{such that}:\]
 \[\sum_{i + j + k = 3} A_{ijk}X^i Y^j Z^k = A_0 X^3 + A_1 Y^3 + A_2 Z^3 + A_3 X^2Y + A_4 X^2Z + A_5 Y^2X + A_6 Y^2Z + A_7 Z^2X + A_8 Z^2Y + A_9 XYZ = 0\]
 
-It is not tricky to check if $(X, Y, Z)$ satisfies this equation, then so does $(tX, tY, tZ)$, so the solution set to this equation is a well-defined set of points in projective space.
+It is not tricky to check if $(X, Y, Z)$ satisfies this equation, then so does $(tX, tY, tZ)$, so the solution set to this equation is a well-defined set of points in projective space. If we project our curve onto the plane $Z = 1$, we instead get the non-homogeneous equation:
 
-Let $C(F)$ be a cubic curve working in some field $F$
+\[\sum_{i + j \leq 3} A_{ij(3-i-j)}x^i y^j = A_0 x^3 + A_1 y^3 + A_2 + A_3 x^2y + A_4 x^2 + A_5 y^2 x + A_6 y^2 + A_7 x + A_8 y + A_9 xy = 0 \]
 
-As we saw:
 
-define $P * Q \in C(F)$ to be the third point on $C(F)$,
 
-have $P * Q = Q * P$
+As we saw in our introduction, if $C(Q)$ is just a curve of the above form in the rational plane $Q^2$ and we take the line going through any two points $P$ and $Q$ (or take the tangent when $P = Q$), almost always we will get a third point $R$ in $Q^2$. From now on, we will denote this binary operation on our points $* : C(Q) \times C(Q) \rightarrow C(Q)$, with $R = P * Q$. We couldn't fully on this statement in our introduction as there is a case where the line only meets the cubic asymptotically, for example the line and curve in $Q^2$:
 
-and $(P * Q) * Q = P$
+\[ 2y\ +3x\ -\ 1=\ 0 \quad \text{ and } \quad 27x^{3}+8y^{3}-1 \ = \ 0 \]
 
-Is $(C(F), *)$ a group? Unfortunately not; it is not hard to mentally verify that a unique identity element doesn't exist and that associativity won't hold.
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{desmos-graph (1).png}
+\caption{\label{fig:asymptote} A line projected through points $(0, \frac{1}{2})$ and $(\frac{1}{3}, 0)$ with the curve $27x^{3}+8y^{3}-1 \ = \ 0$}
+\end{figure}
 
-For three points, $P$, $Q$ and $R$ on our curve $C$ Write $P - Q - R$ to mean these three points are colinear, this notation helps us clear up the fact that these six statements are equivalent:
+Have two only points of intersection, $(0, \frac{1}{2})$ and $(\frac{1}{3}, 0)$ but get asymptotically gets closer and closer. \\
 
-$P * Q = R, P * Q = R, P * R = Q,  Q * R = P$
+However, thinking using our new projective space, we can see that a projective cubic curve contains "points at infinity" that we lose when we project our curve onto $Q^2$, where $Z = 0$, and intuitively, we can see that if there is a point $[X : Y : 0] \in C(Q)$, then the $X$ to $Y$ ratio of this point will be the same as the $x$ to $y$ ratio of the asymptotes of the curve (as when $Z$ approaches $0$, $x = \frac{X}{Z}$ and $y = \frac{Y}{Z}$ will approach infinity). This can be seen by how the corresponding homogeneous equations to our example,
 
-if $A - B - C$ and $D - E - F$ and $A - D - G$ and $B - E - H$
+\[2Y + 3X - Z = 0 \quad \text{ and } \quad 27X^{3}+8Y^{3}-Z^3 \ = \ 0 \] 
 
-then $C * F = G * H$
+Have three points of intersection, $[0 : 1 : 2]$, $[1 : 0 : 3]$ and $[2 : -3 : 0]$\\
 
-If we slightly abuse our new notation, our theorem becomes:
+Thus, our notion about there being \emph{exactly} three points of intersection can be made rigorous as a corollary of Bézout's theorem, which states:\\
 
-if
-$
-\\
-A - B - C \\
-D - E - F \\
-H - I
-$\\
-then, for some $J \in C(F)$:
-$
-\\
-A - B - C \\
-D - E - F \\
-H - I - J
-$
+If $f$ and $g$ are homogeneous polynomials of degree $d_1$ and $d_2$ respectively, then in the complex projective $P_C^2$ they meet in exactly $d_1 d_2$ points (counting multiplicity).\\
 
-Although the notation makes this look intuitive, it is not at all obvious. 
-Why should the line defined by $C$ and $F$ and the line defined by $H$ and $J$ intersect with the curve at the same point? 
+Without going into the details too much, in our case we have a line of degree $1$ and a cubic of degree $3$, so they meet in $3$ points in $P_C^2$ counting multiplicities. However, similar to how non-real solutions to real-coefficiented polynomials come in complex conjugate pairs, our non-real points of intersection also come in complex conjugate pairs. This means that if we know two of our points of intersection are in $P_R^2$ then the third point of intersection must also be in $P_R^2$. Hence, if two of the points of intersection are in $P_Q^2$, then there must be a third point in $P_Q^2$ as well as a rational line will only meet a rationally-coefficiented cubic at points in $P_Q^2$.\\
 
-Three cubic curves that meet at eight points $P_1 \dots P_8$ will also all meet at a ninth point $P_9$.
+So we can see that our binary operation $*$ is well-defined. In fact, we can visually see a couple of properties of it. Namely, for all $P$, $Q$ in $P_Q^2$:
 
-let v be the vector:
+- $P * Q = Q * P$
 
-$
+- $(P * Q) * Q = P$
+
+Now, as mathematicians we ask the question we've been trained to ask: $(C(Q), *)$ a group? Unfortunately not; it is not hard to mentally verify that a unique identity element doesn't exist and that associativity won't hold. However, by studying this operation further, we \emph{will} be able to use it to construct a group law.\\
+
+First, for three points, $P$, $Q$ and $R$ on our curve $C$ Write $P - Q - R$ to mean these three points are colinear, this notation helps us clear up the fact that these six statements are equivalent:
+
+\[ P * Q = R, \ P * R = Q, \ R * P = Q, \ R * Q = P, \ Q * R = P \ \text{ and } \ Q * P = R \]
+
+Using this new notation, we can concisely write out a theorem which describes a subtle but important property of $*$:\\
+
+If, for some $A, B, C, D, E, F, G, H \in C(Q)$: 
+
+$A - B - C$ and $D - E - F$ and $A - D - G$ and $B - E - H$
+
+then $C * F = G * H$\\
+
+Or, even more suggestively:
+\[
+\text{if} \qquad
+\begin{matrix}
+A & - & B & - & C\\
+| &   & | & \\
+D & - & E & - & F\\
+| &   & | &\\
+G &   & H &\\
+\end{matrix}
+\qquad \text{then, for some} \ J \in C(Q) \qquad
+\begin{matrix}
+A & - & B & - & C\\
+| &   & | &   & |\\
+D & - & E & - & F\\
+| &   & | &   & |\\
+G & - & H & - & J\\
+\end{matrix}
+\]
+
+Although the notation makes this look intuitive, it is not at all obvious. Why should the line defined by $C$ and $F$ and the line defined by $H$ and $J$ intersect with the cubic curve at the same point? The first observation that we can make is that if we take the homogeneous equations of three projective lines, say:
+
+\begin{align*}
+    L_{11} X + L_{12} Y + L_{13} Z &= 0 \\
+    L_{21} X + L_{22} Y + L_{23} Z &= 0 \\
+    L_{31} X + L_{32} Y + L_{33} Z &= 0 \\
+\end{align*}
+
+Then, multiplied together, we can get the homogeneous equation of a cubic curve, which is simply the union of our three lines:
+
+\[(L_{11} X + L_{12} Y + L_{13} Z)(L_{21} X + L_{22} Y + L_{23})(L_{31} X + L_{32} Y + L_{33} Z) = 0\]
+
+Hence, we can see that, treating the three vertical lines in our diagram as one cubic and the three horizontal lines as another cubic, our theorem is a special case of the Cayley–Bacharach theorem, which states:\\
+
+Three cubic curves that meet at eight points $P_1 \dots P_8$ will also all meet at a ninth point $P_9$.\\
+
+Proof: let $\vec{a}, \vec{b}$ and $\vec{c}$ be the vectors containing the coefficients for some homogeneous cubics $a(X, Y, Z)$, $b(X, Y, Z)$, and $c(X, Y, Z)$ and let $M$ be a matrix containing the evaluations of each of the terms in a cubic polynomial at the points $P_i = [X_i : Y_i : Z_i]$:\\
+
+\[ \vec{a} = 
 \begin{bmatrix}
-X^3 \\
-Y^3 \\
-Z^3 \\
+A_0 \\
+A_1 \\
+\vdots\\
+A_9\\
 \end{bmatrix} 
-$
+\vec{b} =
+\begin{bmatrix}
+B_0 \\
+B_1 \\
+\vdots\\
+B_9\\
+\end{bmatrix} 
+\vec{c} = 
+\begin{bmatrix}
+C_0 \\
+C_1 \\
+\vdots\\
+C_9\\
+\end{bmatrix} ,
+M = 
+\begin{bmatrix}
+X_1^3  & Y_1^3  & \dots  & X_1 Y_1 Z_1 \\
+X_2^3  & Y_2^3  & \dots  & X_2 Y_2 Z_2 \\
+\vdots & \vdots & \ddots & \vdots\\
+X_8^3  & Y_8^3  & \dots  & X_8 Y_8 Z_8 \\
+\end{bmatrix} 
+\]
 
--why is the group law the way it is?
+As all our points are on the curve:
 
-- show ((A * B) * O) * C = A * ((B * C) * O) ?
+\[M\vec{a} = M\vec{b} = M\vec{c} = \vec{0} \ \text{ or equivalently, } \ \vec{a}, \vec{b} \text{ and } \vec{c} \text{ are in the kernel of }M,  ker(M) \]
 
-therefore, if A + B = (A * B) * O then (A + B) + C = A + (B + C)
+Now, as a consequence of our points being distinct, all of $M$'s rows are linearly independent, so $M$ has a rank of $8$. By the rank-nullity theorem, this means that the dimension of the kernel of $M$ must be $2$, telling us that $\vec{a}$, $\vec{b}$ and $\vec{c}$ must be linearly dependent. As $\vec{a}$ and $\vec{b}$ are non-zero for them to actually describe cubic curves, this means that we should be able to find constants $\lambda_1$ and $\lambda_2$ such that:\\
 
+\[\vec{c} = \lambda_1 \vec{a} + \lambda_2 \vec{b}\]
 
-\subsection{The Wierstrauss normal form}
+so, for all $[X : Y: Z] \in P_Q^2$:
+
+\[c(X, Y, Z) = \lambda_1 a(X, Y, Z) + \lambda_2 b(X, Y, Z)\]
+
+Hence, for any ninth point of intersection $P_9 = [X_9 : Y_9 : Z_9]$ of the curves defined by $a$ and $b$, $a(X_9, Y_9, Z_9) = 0$ and $b(X_9, Y_9, Z_9) = 0$ as $P_9$ is on both these curves, however this means that $c(X_9, Y_9, Z_9) = 0$ so $P_9$ is on the curve defined by $C$ too, completing our proof. \\
+
+While this theorem is interesting, we still need to examine what it means for our binary operation $*$ to make any use of it. Note that the proposition of our theorem involves eight points, however only four of our points are "free". Hence, it makes sense to re-write our result that $G * H = C * F$ to say:
+
+\[(A * D) * (B * E) = (A * B) * (D * E) \quad \text{for any} A, B, D, E \in C(Q)\]
+
+This kind of hints that there may be some form of associative operation that we can wrangle out of our result. Namely, if we instead let $D$ be dependent on $A$ and $G$ and $B$ be dependent of $A$ and $C$, our theorem is:
+
+\[G * ((A * C) * E) = C * ((A * G) * E) \quad \text{for any} A,  C, E, G \in C(Q)\]
+
+We can now finally see that, if for any $P, Q \in P_Q^2$, if we write $P + Q = (P * Q) * E$ for a fixed $E$. Then:
+
+\[G * (A + C) = C * (A + G)\]
+
+So, taking $* E$ on both sides gives:
+
+\[G + (A + C) = C + (A + G)\]
+
+It is not too tricky to see that our new $+$ relation inherits commutativity from $*$; so this above statement can be converted into saying that $+$ is associative:
+
+\[P + (Q + R) = (P + Q) + R \quad \text{ for any } P, Q, R \in C(Q)\]
+
+In defining our operation $+$, we chose a fixed point $E$ on $C(Q)$. From now on, we will refer to this point as $\mathbf{0}$, as it satisfies the identity property:
+
+\[P + \mathbf{0} = (P * \mathbf{0}) * \mathbf{0} = P \quad \text{ for any } P \in C(Q)\]
+
+All we need to do now to show that $(C(Q), +)$ is a group is to is show that there are inverse elements. Let $P \in C(Q)$. Then we want $-P$ to have the property that:
+
+\[ P + (-P) = (P * (-P)) * \mathbf{0} = \mathbf{0}\]
+
+Hence, we can see that we want:
+
+\[P * (-P) = \mathbf{0} * \mathbf{0} \]
+
+So we can see that we can find $P$'s additive inverse with the formula: $-P = P * (\mathbf{0} * \mathbf{0})$ .\\
+
+Working with $+$ will turn out to be much easier than working with $*$ when in comes to studying $C(Q)$, specifically because it is an abelian group. One thing that feels slightly unnatural about our construction of $+$ is that it requires us to pick a point $\mathbf{0}$ on our curve $C(Q)$, however it turns out that all choices of $\mathbf{0}$ will give groups which are isomorphic to each other (the proof is relatively straightforwards, and can be seen at the end of Silverman section 1.2). Hence, it makes sense to talk about \emph{the} group of rational points $C(Q)$.
+
+\subsection{The Weierstrass normal form}
 
 Now that we have developed a theory of projective transformations and a theory of cubic curves, the natural question to ask is:\\
 
 What happens when we apply projective transformations to cubic curves? Can we use projective transformations to simplify their equations?\\
 
-In fact, we will see that, working in $P_Q^2$, all cubic curves can be projectively transformed into a type of cubic curve called an \emph{elliptic curve}, that has an equation in the \emph{wierstrauss normal form}. It is much easier to give and example doing this if we start with a rational point of multiplicity three, however there is a more complex method one can use on cubic curves where one doesn't have a rational point of multiplicity three, which can be found in Silverman.\\
+In fact, we will see that, working in $P_Q^2$, all cubic curves can be projectively transformed into a type of cubic curve called an \emph{elliptic curve}, that has an equation in the \emph{wierstrauss normal form}. It is much easier to give an example of doing this transformation if we start with a rational point of multiplicity three, however there is a more complex method one can use on cubic curves where one doesn't have a rational point of multiplicity three, which can be found in Silverman.\\
 
 Let us start with the cubic curve defined in non-homogeneous coordinates by:
 
@@ -258,9 +428,9 @@ As we see, our curve has been significantly simplified, however it still has som
 Hence, it makes sense to pick a transformation that maps $y - (x + 1) \mapsto y$. One good candidate is:
 
 \[ T_1 = \begin{bmatrix}
-    1 & 0 & 0\\
+    1  & 0 & 0\\
     -1 & 1 & -1\\
-    0 & 0 & 1
+    0  & 0 & 1
 \end{bmatrix},
 \quad
 T_2: <X, Y, Z> \; \mapsto \; <X, Y - X - Z, Z>
@@ -274,15 +444,73 @@ This curve is already in the "Weierstrass normal form"; however we can simplify 
 
 \[y^{2} = x^{3} - x  + 1\]
 
+\begin{figure}
+\centering
+\includegraphics[width=0.3\textwidth]{desmos-graph (2-0).png}
+\includegraphics[width=0.3\textwidth]{desmos-graph (2-1).png}
+\includegraphics[width=0.3\textwidth]{desmos-graph (2-3).png}
+\caption{\label{fig:into curve} Three steps of transforming our cubic curve into an elliptic curve.}
+\end{figure}
+
 This process can be replicated for \emph{any} cubic curve where we have a point of multiplicity three, which may be projectively transformed into an elliptic curve of the form:
 
 \[y^2 = x^3 + bx + c\]
 
-While this is interesting, it is not clear why it is important. The first thing to note is that we can combine our projective transformations into one  projective transformation $T = T_3 T_2 T_1$ which maps rational points on our original cubic curve $C$ to rational points on our elliptic curve $E$. As all projective transformations are invertible, this means that $T$ is in fact a bijection, so any rational point on $C$ can be converted into a rational point on $E$ and vice versa. On top of this, we know that projective transformations map lines to lines, meaning that for any points $P$ and $Q$ on $T(P *_C Q) = T(P) *_E T(Q)$. Extending this a bit further, it is not tricky to see that it must be the case that:
+While this is interesting, it is not clear why it is important. The first thing to note is that we can combine our projective transformations into one  projective transformation $T = T_3 T_2 T_1$ which maps rational points on our original cubic curve $C(Q)$ to rational points on our elliptic curve $E(Q)$. As all projective transformations are invertible, this means that $T$ is in fact a bijection, so any rational point on $C(q)$ can be converted into a rational point on $E(Q)$ and vice versa. On top of this, we know that projective transformations map lines to lines, meaning that for any points $P$ and $Q$ on $T(P *_C Q) = T(P) *_E T(Q)$. Extending this a bit further, it is not tricky to see that it must be the case that:
 
 \[T(P +_C Q) = T(P) +_E T(Q)\]
 
 Hence, we can see that not only is T a bijection between the rational points of our curve, but it is in fact an \emph{isomorphism} between the groups of rational points. This means that anything we discover about the group of rational points of our simpler elliptic curve can be extended to all cubic curves, and we will see it will be easier to work with elliptic curves, mainly because it is much easier to add points on elliptic curves.
+
+Specifically, if we pick $\mathbf{0}$ to be the point of multiplicity three $[0 : 1 :0]$ which is now the only "point at infinity" on our curve; then we can see that taking $P * \mathbf{0}$ just amounts to reflecting $P$ on the $x$-axis. Hence, for any points $P = (x_P, y_P)$ and $Q = (x_Q, y_Q)$ on an elliptic curve defined by the Weierstrass equation:
+
+\[y^2 = f(x) = x^3 + ax^2 + bx + c\]
+
+To calculate $P + Q$, we just need to find the $x$ and $y$ coordinates of $P * Q$ and then take the negative of the $y$ coordinate. It is thus not too hard to derive explicit formulae for adding points:
+
+\[x_{P+Q} = x_{P*Q}, \quad y_{P+Q} = - y_{P*Q}\]
+
+\[x_{P*Q} = \lambda^2 - a - x_P - x_Q \quad \text{ where } \quad \lambda = \begin{cases} 
+          \frac{y_P - y_Q}{x_P - x_Q} & x_P \neq x_Q \\
+          \frac{f'(x_P)}{2y_P} & x_P = x_Q \\
+       \end{cases}\]
+       
+\[y_{P*Q} = \lambda x_{P*Q} + v \quad \text{ where } \quad v = y_P - \lambda x_P\]
+
+Note that, as our $\mathbf{0}$ point has multiplicity two, $\mathbf{0} = \mathbf{0} * \mathbf{0}$, So to calculate the coordinates of $-P$, we just need to reflect about the $x$-axis too:
+
+\[x_{-P} = x_P, \quad y_{-P} = -y_P\]
+
+For example, suppose we have the points $P = (0, -1)$ and $Q = (1, 1)$ on the curve which we have computed:
+
+\[y^{2} = x^{3} - x  + 1\]
+
+To compute $P + Q$, we first find the equation line between our points:
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{desmos-graph (3).png}
+\caption{\label{fig:into curve} $2Q$ and $P+Q$ calculated on the curve $y^{2} = x^{3} - x  + 1$}
+\end{figure}
+
+
+\[y = \lambda x + v \quad \text{ with } \quad \lambda = \frac{-1 - 1}{0 - 1} = 2, \quad v = 2\times 0 -1 = -1\]
+
+Subbing this line equation for $y$ into our cubic will give us a cubic where, by examining the $x^2$ term, we can see the third root will be given by:
+
+\[x_{P*Q} = \lambda^2 - 0 - 1 = 4 - 1 = 3\]
+
+Subbing this into our line equation gives:
+
+\[y_{P*Q} = 2 \times 3 - 1 = 5\]
+
+Finally, reflecting about the $y$ axis gives $P + Q = (3, -5)$. To calculate $2Q$, we need to find the equation of the tangent at $Q$, namely:
+
+\[y = \lambda x + v \quad \text{ with } \quad \lambda = \frac{f'(1)}{2 \times 1} = 1, \quad v = 1 \times 1 - 1 = 0\]
+
+We can then repeat the same process as before to see: $2Q = (-1, -1)$
+
+This whole process is much easier than trying to compute the sum $T^{-1}(P) \ + \ T^{-1}(Q)$ on our original cubic.
 
 \newpage
 
@@ -297,7 +525,26 @@ Where $C(Q)_{tors}$ is the finite subgroup of \emph{torsion points} of $C(Q)$ (t
 
 For brevity, I have emitted the proof for one of the key lemmas in the theorem (namely that there is a finite number of cosets of $2C(Q)$ in $C(Q)$) because fully proving it would require a significant detour into complex analysis. Other lemmas I have only partially proved; hoping to give an intuition as to why the fact is true rather than getting into the weeds of writing out a full proof - which would make this report much longer than I am targeting. Full proofs for all these lemmas can be found in Silverman.\\
 
-One thing one will notice by playing around with the addition law is that, as we add points, the points seem to get progressively more "complex". For instance: <example>
+One thing one will notice by playing around with the addition law is that, as we add points, the points seem to get progressively more "complex" (in the sense of how much information is needed to store the point's coordinates, \emph{not} in the sense of complex numbers). For instance: \\
+
+Take $C(Q)$ to be the ellipic curve defined by:
+
+\[ y^2 = x^3 + 3x^2 + x - 1 \quad \text{with} \quad P = (-2, 1)\]
+
+Then, using python to compute $nP$ we see:
+
+\begin{align*}
+    1P &= \left(-2,1 \right) \\ 
+    2P &= \left(\frac{5}{4},- \frac{21}{8} \right) \\ 
+    3P &= \left(- \frac{170}{169},\frac{239}{2197} \right) \\ 
+    4P &= \left(\frac{5713}{7056},\frac{900271}{592704} \right) \\ 
+    5P &= \left(- \frac{4129274}{2325625},- \frac{3693595151}{3546578125} \right) \\
+    6P &= \left(\frac{3224423333}{38613796},\frac{186368366079819}{239946128344} \right) \\ 
+    & \ \ \vdots
+\end{align*}
+
+
+
 Hence, it makes sense that our generating set would be comprised of points of low complexity (and as the generating set is finite, at least \emph{bounded} complexity), to prove our theorem about $C(Q)$ being finitely generated; it makes sense to do two things;\\
 
 1. prove that the number of points below a certain bound of complexity is finite \\
@@ -306,7 +553,7 @@ Hence, it makes sense that our generating set would be comprised of points of lo
 
 To do this, we define the \emph{height} of a rational number $q = \frac{m}{n}$ as the maximum of it's numerator and denominator written in it's lowest terms:
 
-\[ H(q) = H(\frac{m}{n}) = max(|m|, |n|) \text{where m and n are coprime.} \]
+\[ H(q) = H\left(\frac{m}{n}\right) = max(|m|, |n|) \text{where m and n are coprime.} \]
 
 We will see that we can adapt this notion of height of rational numbers into a concrete measure of complexity for our points. But first, we need to examine height in more detail.
 
@@ -393,7 +640,7 @@ To bring this back to what we said in our introduction, this means all we need t
 
 Let $P = (x_P, y_P)$ be any point on an Elliptic Curve $C(Q)$. We will first examine how $h(2P)$ and $h(P)$ relate.\\
 
-Recall our duplication formula for finding $x_{2P}$ in terms of $x$:
+Recall we can re-write our formula for $x_{2P}$ such that it is only in terms of $x_P$:
 
 \[x_{2P} = \frac{f'(x_P)^2}{4 f(x_P)} - a - 2x_P = \frac{x_P^4 - 2bx_P^2 - 8cx_P + b^2 - 4ac}{4(x_P^3 +x_P^2 + bx_P + c)}\]
 
@@ -458,7 +705,7 @@ equivalently:
 
 Applying our lower and upper bounds we see that:
 
-\[ 4h(P_1) - k \quad \leq \quad  h(2P_1) =  P_0 - A_i  \quad  \leq  \quad  2h(P_0) + k_{-A_i} \]
+\[ 4h(P_1) - k \quad \leq \quad  h(2P_1) =  h(P_0 - A_i)  \quad  \leq  \quad  2h(P_0) + k_{-A_i} \]
 
 Hence:
 
@@ -593,6 +840,14 @@ Plugging these into our curve's equation gives:
 hence:
 
 \[ s = t^3 + a t^2 s + b t s^2 + c s^3 \]
+
+\begin{figure}
+\centering
+\includegraphics[width=0.3\textwidth]{desmos-graph (4).png}
+\includegraphics[width=0.3\textwidth]{desmos-graph (4-1).png}
+\caption{\label{fig:into curve} The curve $y^2  = x^3 - 43 x + 166$ before and after being transformed into $s, t$ coordinates}
+\end{figure}
+
 
 Now, to add $(t_P, s_P)$ and $(t_Q, s_Q)$ on our curve we simply follow the procedure for a standard cubic curve.\\
 
@@ -781,93 +1036,16 @@ If any of the points in this list, say $kP$ for some $k$ didn't turn out to be i
 
 Barry Mazur (quoted in the beginning) proved in 1978 that there are only a few possible torsion subgroups that our elliptic curve can have; all being of order less than 12. This means that, at most, have to check $P, 2P, ... 12P$ to see if $P$ is of finite order.
 
-\newpage
 
-\section{Some examples to get started}
-
-\subsection{How to create Sections and Subsections}
-
-Simply use the section and subsection commands, as in this example document! With Overleaf, all the formatting and numbering is handled automatically according to the template you've chosen. If you're using Rich Text mode, you can also create new section and subsections via the buttons in the editor toolbar.
-
-\subsection{How to include Figures}
-
-First you have to upload the image file from your computer using the upload link in the file-tree menu. Then use the include graphics command to include it in your document. Use the figure environment and the caption command to add a number and a caption to your figure. See the code for Figure \ref{fig:frog} in this section for an example.
-
-Note that your figure will automatically be placed in the most appropriate place for it, given the surrounding text and taking into account other figures or tables that may be close by. You can find out more about adding images to your documents in this help article on \href{https://www.overleaf.com/learn/how-to/Including_images_on_Overleaf}{including images on Overleaf}.
-\newpage
 \begin{figure}
 \centering
-\includegraphics[width=0.3\textwidth]{frog.jpg}
-\caption{\label{fig:frog}This frog was uploaded via the file-tree menu.}
+\includegraphics[width=0.5\textwidth]{desmos-graph (5).png}
+\caption{\label{fig:into curve} The curve $y^2  = x^3 - 43 x + 166$ and it's points of finite order}
 \end{figure}
 
-\subsection{How to add Tables}
+\newpage
 
-Use the table and tabular environments for basic tables --- see Table~\ref{tab:widgets}, for example. For more information, please see this help article on \href{https://www.overleaf.com/learn/latex/tables}{tables}. 
-
-\begin{table}
-\centering
-\begin{tabular}{l|r}
-Item & Quantity \\\hline
-Widgets & 42 \\
-Gadgets & 13
-\end{tabular}
-\caption{\label{tab:widgets}An example table.}
-\end{table}
-
-\subsection{How to add Comments and Track Changes}
-
-Comments can be added to your project by highlighting some text and clicking ``Add comment'' in the top right of the editor pane. To view existing comments, click on the Review menu in the toolbar above. To reply to a comment, click on the Reply button in the lower right corner of the comment. You can close the Review pane by clicking its name on the toolbar when you're done reviewing for the time being.
-
-Track changes are available on all our \href{https://www.overleaf.com/user/subscription/plans}{premium plans}, and can be toggled on or off using the option at the top of the Review pane. Track changes allow you to keep track of every change made to the document, along with the person making the change. 
-
-\subsection{How to add Lists}
-
-You can make lists with automatic numbering \dots
-
-\begin{enumerate}
-\item Like this,
-\item and like this.
-\end{enumerate}
-\dots or bullet points \dots
-\begin{itemize}
-\item Like this,
-\item and like this.
-\end{itemize}
-
-\subsection{How to write Mathematics}
-
-\LaTeX{} is great at typesetting mathematics. Let $X_1, X_2, \ldots, X_n$ be a sequence of independent and identically distributed random variables with $\text{E}[X_i] = \mu$ and $\text{Var}[X_i] = \sigma^2 < \infty$, and let
-\[S_n = \frac{X_1 + X_2 + \cdots + X_n}{n}
-      = \frac{1}{n}\sum_{i}^{n} X_i\]
-denote their mean. Then as $n$ approaches infinity, the random variables $\sqrt{n}(S_n - \mu)$ converge in distribution to a normal $\mathcal{N}(0, \sigma^2)$.
-
-
-\subsection{How to change the margins and paper size}
-
-Usually the template you're using will have the page margins and paper size set correctly for that use-case. For example, if you're using a journal article template provided by the journal publisher, that template will be formatted according to their requirements. In these cases, it's best not to alter the margins directly.
-
-If however you're using a more general template, such as this one, and would like to alter the margins, a common way to do so is via the geometry package. You can find the geometry package loaded in the preamble at the top of this example file, and if you'd like to learn more about how to adjust the settings, please visit this help article on \href{https://www.overleaf.com/learn/latex/page_size_and_margins}{page size and margins}.
-
-\subsection{How to change the document language and spell check settings}
-
-Overleaf supports many different languages, including multiple different languages within one document. 
-
-To configure the document language, simply edit the option provided to the babel package in the preamble at the top of this example project. To learn more about the different options, please visit this help article on \href{https://www.overleaf.com/learn/latex/International_language_support}{international language support}.
-
-To change the spell check language, simply open the Overleaf menu at the top left of the editor window, scroll down to the spell check setting, and adjust accordingly.
-
-\subsection{How to add Citations and a References List}
-
-You can simply upload a \verb|.bib| file containing your BibTeX entries, created with a tool such as JabRef. You can then cite entries from it, like this: \cite{greenwade93}. Just remember to specify a bibliography style, as well as the filename of the \verb|.bib|. You can find a \href{https://www.overleaf.com/help/97-how-to-include-a-bibliography-using-bibtex}{video tutorial here} to learn more about BibTeX.
-
-If you have an \href{https://www.overleaf.com/user/subscription/plans}{upgraded account}, you can also import your Mendeley or Zotero library directly as a \verb|.bib| file, via the upload menu in the file-tree.
-
-\subsection{Good luck!}
-
-We hope you find Overleaf useful, and do take a look at our \href{https://www.overleaf.com/learn}{help library} for more tutorials and user guides! Please also let us know if you have any feedback using the Contact Us link at the bottom of the Overleaf menu --- or use the contact form at \url{https://www.overleaf.com/contact}.
-
-\bibliographystyle{alpha}
+\bibliographystyle{agsm}
 \bibliography{sample}
 
 \end{document}
